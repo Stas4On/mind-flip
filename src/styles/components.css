@@ -97,9 +97,17 @@
 .flashcard-container {
   perspective: 1200px;
   width: 100%;
-  max-width: 500px;
+  max-width: 100%; /* Take full parent width on mobile */
   height: 380px;
   margin: 0 auto;
+  transition: max-width var(--transition-normal), height var(--transition-normal);
+}
+
+@media (min-width: 600px) {
+  .flashcard-container {
+    max-width: 620px; /* Expand on desktops */
+    height: 400px;
+  }
 }
 
 .flashcard {
