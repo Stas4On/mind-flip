@@ -1,9 +1,16 @@
 import { useState } from 'react';
 import { Button } from './components/ui/Button';
+import { Flashcard } from './components/cards/Flashcard';
 import { Check, X, RefreshCw, Star, Trash2 } from 'lucide-react';
 
 function App() {
   const [count, setCount] = useState(0);
+  const [isCardFlipped, setIsCardFlipped] = useState(false);
+
+  const demoCard = {
+    front: `### Как создать компонент в Angular?\n\nКакая декоратор-функция используется для определения компонента в Angular и какие основные параметры она принимает?`,
+    back: `### Декоратор \`@Component\`\n\nДля создания компонента используется декоратор \`@Component\` из пакета \`@angular/core\`:\n\n\`\`\`typescript\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-user-profile',\n  standalone: true,\n  templateUrl: './user-profile.component.html',\n  styleUrl: './user-profile.component.css'\n})\nexport class UserProfileComponent {\n  username = 'Leon';\n}\n\`\`\``
+  };
 
   return (
     <div style={{ 
@@ -29,6 +36,35 @@ function App() {
           Тактильный игровой UI-кит с 3D эффектами
         </p>
       </header>
+
+      {/* Interactive Flashcard Section */}
+      <section style={{ 
+        background: 'var(--color-card-bg)', 
+        border: 'var(--border-width) solid var(--color-border)', 
+        borderRadius: 'var(--border-radius-md)', 
+        padding: '30px',
+        boxShadow: '0 var(--shadow-depth) 0 var(--color-border)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px',
+        alignItems: 'center'
+      }}>
+        <h2>🎴 Интерактивная флеш-карточка</h2>
+        <Flashcard
+          front={demoCard.front}
+          back={demoCard.back}
+          isFlipped={isCardFlipped}
+          onFlip={() => setIsCardFlipped(!isCardFlipped)}
+        />
+        <div style={{ display: 'flex', gap: '12px', marginTop: '10px' }}>
+          <Button 
+            variant="outline" 
+            onClick={() => setIsCardFlipped(!isCardFlipped)}
+          >
+            Перевернуть карточку
+          </Button>
+        </div>
+      </section>
 
       {/* Button Variants Section */}
       <section style={{ 
