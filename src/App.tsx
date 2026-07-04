@@ -1,16 +1,20 @@
+import { lazy, Suspense } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import { Dashboard } from './pages/Dashboard';
-import { StudySession } from './pages/StudySession';
-import { DeckEditor } from './pages/DeckEditor';
+
+const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
+const StudySession = lazy(() => import('./pages/StudySession').then(m => ({ default: m.StudySession })));
+const DeckEditor = lazy(() => import('./pages/DeckEditor').then(m => ({ default: m.DeckEditor })));
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/study/:deckId" element={<StudySession />} />
-        <Route path="/edit/:deckId" element={<DeckEditor />} />
-      </Routes>
+      <Suspense fallback={<div className="loadingScreen"><h2 className="loadingText">Загрузка...</h2></div>}>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/study/:deckId" element={<StudySession />} />
+          <Route path="/edit/:deckId" element={<DeckEditor />} />
+        </Routes>
+      </Suspense>
     </Router>
   );
 }
