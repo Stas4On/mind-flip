@@ -163,7 +163,7 @@
   text-align: center;
   overflow-y: auto;
   margin: 10px 0;
-  padding: 10px 0;
+  padding: 10px 16px; /* Horizontal padding prevents scrollbar from sticking to code blocks */
 }
 
 /* Badge for front/back status */
