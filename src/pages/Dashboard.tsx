@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDecks, getDeckCards, createDeck, type Deck } from '../services/db';
+import { onAuthStateChanged, signOut, signIn, signUp, signInAsGuest, type AppUser } from '../services/auth';
+import { isFirebaseConfigured } from '../lib/firebase';
 import { Leon } from '../components/mascot/Leon';
 import { Button } from '../components/ui/Button';
-import { Plus, Play, Settings, Brain } from 'lucide-react';
+import { Plus, Play, Settings, Brain, LogOut, Cloud, Database, Lock, Mail } from 'lucide-react';
 import { isCardDue } from '../lib/leitner';
 
 export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState<AppUser | null>(null);
+  
+  // Dashboard states
   const [decks, setDecks] = useState<Deck[]>([]);
   const [deckStats, setDeckStats] = useState<Record<string, { total: number; due: number }>>({});
   const [showNewDeckForm, setShowNewDeckForm] = useState(false);
@@ -15,8 +20,31 @@ export const Dashboard: React.FC = () => {
   const [newDeckDesc, setNewDeckDesc] = useState('');
   const [loading, setLoading] = useState(true);
 
+  // Auth form states
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [authLoading, setAuthLoading] = useState(false);
+
   useEffect(() => {
-    loadDecksAndStats();
+    // Listen to authentication changes
+    const unsubscribe = onAuthStateChanged((currentUser) => {
+      setUser(currentUser);
+      
+      if (currentUser) {
+        loadDecksAndStats();
+      } else {
+        // If not logged in and Firebase is disabled, auto sign-in as guest
+        if (!isFirebaseConfigured) {
+          signInAsGuest();
+        } else {
+          setLoading(false);
+        }
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const loadDecksAndStats = async () => {
@@ -57,6 +85,47 @@ export const Dashboard: React.FC = () => {
     }
   };
 
+  const handleAuthSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || !password.trim()) return;
+
+    setAuthError('');
+    setAuthLoading(true);
+    try {
+      if (isSignUp) {
+        await signUp(email, password);
+      } else {
+        await signIn(email, password);
+      }
+    } catch (err: any) {
+      console.error('Auth error', err);
+      setAuthError(err.message || 'Ошибка авторизации. Проверьте данные.');
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleGuestLogin = async () => {
+    setAuthLoading(true);
+    try {
+      await signInAsGuest();
+    } catch (err) {
+      console.error('Guest login failed', err);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      setDecks([]);
+      setDeckStats({});
+    } catch (err) {
+      console.error('Sign out error', err);
+    }
+  };
+
   const totalCards = Object.values(deckStats).reduce((acc, curr) => acc + curr.total, 0);
   const totalDue = Object.values(deckStats).reduce((acc, curr) => acc + curr.due, 0);
 
@@ -72,17 +141,167 @@ export const Dashboard: React.FC = () => {
     leonMood = 'happy';
   }
 
+  // 1. Loading Screen
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
-        <h2 style={{ fontWeight: 800, color: 'var(--color-text-muted)' }}>Загрузка колод...</h2>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <h2 style={{ fontWeight: 800, color: 'var(--color-text-muted)' }}>Загрузка приложения...</h2>
       </div>
     );
   }
 
+  // 2. Authentication Screen (when Firebase is configured and user is logged out)
+  if (!user) {
+    return (
+      <div style={{ maxWidth: '450px', margin: '80px auto', padding: '0 20px' }} className="animate-pop">
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+          <Brain size={48} color="var(--color-primary)" style={{ marginBottom: '10px' }} className="animate-float" />
+          <h1 style={{ fontSize: '2.2rem' }}>MindFlip</h1>
+          <p style={{ color: 'var(--color-text-muted)', fontWeight: 600 }}>Обучение программированию по флеш-карточкам</p>
+        </div>
+
+        <form onSubmit={handleAuthSubmit} style={{
+          background: 'var(--color-card-bg)',
+          border: 'var(--border-width) solid var(--color-border)',
+          borderRadius: 'var(--border-radius-lg)',
+          padding: '30px',
+          boxShadow: '0 var(--shadow-depth) 0 var(--color-border)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '16px'
+        }}>
+          <h2 style={{ fontSize: '1.4rem', textAlign: 'center' }}>
+            {isSignUp ? '✨ Регистрация' : '🔐 Вход в аккаунт'}
+          </h2>
+
+          {authError && (
+            <div style={{
+              backgroundColor: 'var(--color-danger-light)',
+              color: 'var(--color-danger-dark)',
+              border: '2px solid var(--color-border)',
+              borderRadius: 'var(--border-radius-sm)',
+              padding: '10px 14px',
+              fontSize: '0.9rem',
+              fontWeight: 600
+            }}>
+              {authError}
+            </div>
+          )}
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Mail size={14} /> Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="your-email@domain.com"
+              required
+              style={{
+                padding: '12px',
+                border: 'var(--border-width) solid var(--color-border)',
+                borderRadius: 'var(--border-radius-sm)',
+                fontFamily: 'var(--font-primary)',
+                fontWeight: 600,
+                outline: 'none'
+              }}
+            />
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Lock size={14} /> Пароль
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="••••••••"
+              required
+              style={{
+                padding: '12px',
+                border: 'var(--border-width) solid var(--color-border)',
+                borderRadius: 'var(--border-radius-sm)',
+                fontFamily: 'var(--font-primary)',
+                fontWeight: 600,
+                outline: 'none'
+              }}
+            />
+          </div>
+
+          <Button type="submit" variant="primary" style={{ marginTop: '10px' }} disabled={authLoading}>
+            {authLoading ? 'Загрузка...' : isSignUp ? 'Зарегистрироваться' : 'Войти'}
+          </Button>
+
+          <div style={{ textAlign: 'center', fontSize: '0.9rem', fontWeight: 600, marginTop: '4px' }}>
+            <span style={{ color: 'var(--color-text-muted)' }}>
+              {isSignUp ? 'Уже есть аккаунт? ' : 'Новый пользователь? '}
+            </span>
+            <button
+              type="button"
+              onClick={() => setIsSignUp(!isSignUp)}
+              style={{ background: 'none', border: 'none', color: 'var(--color-primary-dark)', cursor: 'pointer', fontWeight: 800, textDecoration: 'underline' }}
+            >
+              {isSignUp ? 'Войти в аккаунт' : 'Создать аккаунт'}
+            </button>
+          </div>
+
+          <div style={{ borderTop: '2px dashed var(--color-border)', margin: '10px 0 5px 0' }} />
+
+          <Button type="button" variant="outline" onClick={handleGuestLogin} disabled={authLoading}>
+            Войти как гость (Локально)
+          </Button>
+        </form>
+      </div>
+    );
+  }
+
+  // 3. Regular Authenticated Dashboard Screen
   return (
     <div style={{ maxWidth: '900px', margin: '0 auto', padding: '30px 20px', display: 'flex', flexDirection: 'column', gap: '30px' }} className="animate-pop">
       
+      {/* Synchronization Mode Banner */}
+      {isFirebaseConfigured ? (
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: 'var(--color-success-light)',
+          color: 'var(--color-success-dark)',
+          border: '2px solid var(--color-border)',
+          borderRadius: 'var(--border-radius-sm)',
+          padding: '8px 16px',
+          fontSize: '0.85rem',
+          fontWeight: 700
+        }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Cloud size={16} /> Облачная база активна ({user.isAnonymous ? 'Гостевой режим' : user.email})
+          </span>
+          <button 
+            onClick={handleSignOut} 
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-danger-dark)', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+          >
+            <LogOut size={14} /> Выйти
+          </button>
+        </div>
+      ) : (
+        <div style={{
+          backgroundColor: 'var(--color-primary-light)',
+          border: '2px solid var(--color-border)',
+          borderRadius: 'var(--border-radius-sm)',
+          padding: '12px 16px',
+          fontSize: '0.85rem',
+          fontWeight: 600,
+          lineHeight: 1.4
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 800, color: 'var(--color-primary-dark)', marginBottom: '4px' }}>
+            <Database size={16} /> Локальный демо-режим (данные в localStorage)
+          </div>
+          Для включения облачной синхронизации Firestore создайте файл <code>.env.local</code> в корне проекта с переменными <code>VITE_FIREBASE_API_KEY</code> и <code>VITE_FIREBASE_PROJECT_ID</code>.
+        </div>
+      )}
+
       {/* App Branding Header */}
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

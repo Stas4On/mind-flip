@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getDecks, getDeckCards, createCard, type Deck, type Card } from '../services/db';
+import { getDecks, getDeckCards, createCard, deleteCard, type Deck, type Card } from '../services/db';
 import { Flashcard } from '../components/cards/Flashcard';
 import { Button } from '../components/ui/Button';
 import { ArrowLeft, Plus, Trash2, Eye } from 'lucide-react';
@@ -61,10 +61,7 @@ export const DeckEditor: React.FC = () => {
   const handleDeleteCard = async (cardId: string) => {
     if (!deckId) return;
     try {
-      const cardsKey = `mind_flip_cards_${deckId}`;
-      const allCards = await getDeckCards(deckId);
-      const filtered = allCards.filter(c => c.id !== cardId);
-      localStorage.setItem(cardsKey, JSON.stringify(filtered));
+      await deleteCard(deckId, cardId);
       await loadDeckAndCards();
     } catch (err) {
       console.error('Failed to delete card', err);
