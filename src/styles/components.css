@@ -1,103 +1,103 @@
-/* Gamified Tactile Button */
+/* Minimal Flat Button */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-primary);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius-sm);
   cursor: pointer;
   user-select: none;
   position: relative;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+  transition: all var(--transition-fast);
   text-decoration: none;
 }
 
-/* 3D Push Shadow Effect */
 .btn-sm {
-  padding: 8px 16px;
+  padding: 6px 14px;
   font-size: 0.85rem;
-  --btn-shadow-depth: var(--shadow-depth-sm);
-  box-shadow: 0 var(--btn-shadow-depth) 0 var(--color-border);
 }
 
 .btn-md {
-  padding: 12px 24px;
-  font-size: 1rem;
-  --btn-shadow-depth: var(--shadow-depth);
-  box-shadow: 0 var(--btn-shadow-depth) 0 var(--color-border);
+  padding: 10px 20px;
+  font-size: 0.95rem;
 }
 
 .btn-lg {
-  padding: 16px 32px;
-  font-size: 1.2rem;
-  --btn-shadow-depth: 8px;
-  box-shadow: 0 var(--btn-shadow-depth) 0 var(--color-border);
+  padding: 14px 28px;
+  font-size: 1.1rem;
   border-radius: var(--border-radius-md);
 }
 
 /* Click / Active State */
 .btn:active {
-  transform: translateY(var(--btn-shadow-depth));
-  box-shadow: 0 0 0 var(--color-border);
+  transform: scale(0.98);
 }
 
 .btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none !important;
-  box-shadow: 0 var(--btn-shadow-depth) 0 var(--color-border) !important;
 }
 
 /* Color Variants */
 .btn-primary {
   background-color: var(--color-primary);
-  color: var(--color-card-bg);
+  border-color: var(--color-primary);
+  color: #fff;
 }
 .btn-primary:hover:not(:disabled) {
   background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
 }
 
 .btn-success {
   background-color: var(--color-success);
-  color: var(--color-card-bg);
+  border-color: var(--color-success);
+  color: #fff;
 }
 .btn-success:hover:not(:disabled) {
   background-color: var(--color-success-dark);
+  border-color: var(--color-success-dark);
 }
 
 .btn-danger {
   background-color: var(--color-danger);
-  color: var(--color-card-bg);
+  border-color: var(--color-danger);
+  color: #fff;
 }
 .btn-danger:hover:not(:disabled) {
   background-color: var(--color-danger-dark);
+  border-color: var(--color-danger-dark);
 }
 
 .btn-warning {
   background-color: var(--color-warning);
-  color: var(--color-card-bg);
+  border-color: var(--color-warning);
+  color: #fff;
 }
 .btn-warning:hover:not(:disabled) {
   background-color: var(--color-warning-dark);
+  border-color: var(--color-warning-dark);
 }
 
 .btn-outline {
-  background-color: var(--color-card-bg);
+  background-color: transparent;
   color: var(--color-text-main);
+  border-color: var(--color-border);
 }
 .btn-outline:hover:not(:disabled) {
-  background-color: var(--color-primary-light);
+  background-color: var(--color-inline-code-bg);
 }
 
-/* 3D Flashcard styles */
+/* Strict Flashcard styles */
 .flashcard-container {
   perspective: 1200px;
   width: 100%;
-  max-width: 100%; /* Take full parent width on mobile */
+  max-width: 100%;
   height: 380px;
   margin: 0 auto;
   transition: max-width var(--transition-normal), height var(--transition-normal);
@@ -105,7 +105,7 @@
 
 @media (min-width: 600px) {
   .flashcard-container {
-    max-width: 620px; /* Expand on desktops */
+    max-width: 620px;
     height: 400px;
   }
 }
@@ -115,7 +115,7 @@
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  transition: transform var(--transition-bounce);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
@@ -132,33 +132,25 @@
   border-radius: var(--border-radius-lg);
   padding: 30px;
   background-color: var(--color-card-bg);
-  box-shadow: 0 var(--shadow-depth) 0 var(--color-border), 0 10px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Space for watermark / hint */
+  justify-content: space-between;
   align-items: center;
   overflow: hidden;
-  transition: box-shadow var(--transition-fast);
+  transition: box-shadow var(--transition-normal);
 }
 
 .flashcard-back {
   transform: rotateY(180deg);
 }
 
-/* Card flip hover micro-interaction */
-.flashcard:hover:not(.flipped) {
-  transform: translateY(-4px);
-}
-.flashcard:hover.flipped {
-  transform: rotateY(180deg) translateY(-4px);
-}
-
 .flashcard:hover:not(.flipped) .flashcard-front {
-  box-shadow: 0 calc(var(--shadow-depth) + 4px) 0 var(--color-border), 0 14px 28px rgba(0, 0, 0, 0.14);
+  box-shadow: var(--shadow-md);
 }
 
 .flashcard:hover.flipped .flashcard-back {
-  box-shadow: 0 calc(var(--shadow-depth) + 4px) 0 var(--color-border), 0 14px 28px rgba(0, 0, 0, 0.14);
+  box-shadow: var(--shadow-md);
 }
 
 /* Content Area inside cards */
@@ -171,46 +163,47 @@
   text-align: center;
   overflow-y: auto;
   margin: 10px 0;
-  padding: 10px 16px; /* Horizontal padding prevents scrollbar from sticking to code blocks */
+  padding: 10px 16px;
 }
 
 /* Badge for front/back status */
 .card-badge {
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   padding: 4px 10px;
-  border: 2px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 20px;
-  background-color: var(--color-primary-light);
-  color: var(--color-primary-dark);
+  background-color: transparent;
+  color: var(--color-text-muted);
   align-self: center;
 }
 
 .flashcard-back .card-badge {
-  background-color: var(--color-success-light);
-  color: var(--color-success-dark);
+  background-color: transparent;
+  color: var(--color-text-muted);
 }
 
 .card-hint {
   font-size: 0.85rem;
   color: var(--color-text-muted);
-  font-weight: 500;
+  font-weight: 400;
   margin-top: 10px;
 }
 
 /* Markdown Specific Styles inside Cards */
 .markdown-content {
   width: 100%;
-  font-size: 1.15rem;
-  font-weight: 500;
-  line-height: 1.5;
-  margin: auto 0; /* Center vertically if space exists, top-align if overflow */
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: auto 0;
 }
 
 .markdown-content h3 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 600;
   margin-bottom: 12px;
 }
 
@@ -220,24 +213,22 @@
 
 /* Code block styling */
 .markdown-content pre {
-  background-color: hsl(0, 0%, 8%);
-  color: hsl(0, 0%, 95%);
-  border: 2px solid var(--color-border);
+  background-color: var(--color-inline-code-bg);
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border);
   border-radius: var(--border-radius-sm);
   padding: 12px;
   text-align: left;
   overflow-x: auto;
   margin: 10px 0;
   width: 100%;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .markdown-content code {
   font-family: 'Fira Code', 'Courier New', Courier, monospace;
   font-size: 0.9rem;
-  font-weight: 600;
   background-color: var(--color-inline-code-bg);
-  color: var(--color-danger-dark);
+  color: var(--color-primary-dark);
   padding: 2px 6px;
   border-radius: 4px;
 }
@@ -248,4 +239,3 @@
   padding: 0;
   border-radius: 0;
 }
-
