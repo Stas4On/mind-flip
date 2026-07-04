@@ -18,6 +18,7 @@ export const StudySession: React.FC = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [leonMood, setLeonMood] = useState<LeonMood>('default');
   const [sessionFinished, setSessionFinished] = useState(false);
+  const [loading, setLoading] = useState(true);
   
   // Statistics
   const [correctCount, setCorrectCount] = useState(0);
@@ -30,6 +31,7 @@ export const StudySession: React.FC = () => {
 
   const loadCards = async () => {
     if (!deckId) return;
+    setLoading(true);
     try {
       const allCards = await getDeckCards(deckId);
       setCards(allCards);
@@ -48,6 +50,8 @@ export const StudySession: React.FC = () => {
       setLeonMood('default');
     } catch (err) {
       console.error('Failed to load session cards', err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -84,6 +88,14 @@ export const StudySession: React.FC = () => {
       }
     }, 600);
   };
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+        <h2 style={{ fontWeight: 800, color: 'var(--color-text-muted)' }}>Загрузка сессии...</h2>
+      </div>
+    );
+  }
 
   if (studyQueue.length === 0 && cards.length > 0 && !cramMode) {
     return (
@@ -150,6 +162,15 @@ export const StudySession: React.FC = () => {
   }
 
   const currentCard = studyQueue[currentIndex];
+
+  if (!currentCard) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+        <h2 style={{ fontWeight: 800, color: 'var(--color-text-muted)' }}>Загрузка сессии...</h2>
+      </div>
+    );
+  }
+
   const progressPercent = (currentIndex / studyQueue.length) * 100;
 
   return (
