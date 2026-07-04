@@ -1,79 +1,85 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
   /* Fonts */
-  --font-primary: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  /* Theme Colors (Gamified Palette) */
-  --color-bg-page-start: hsl(150, 60%, 97%);
-  --color-bg-page-end: hsl(35, 100%, 97%);
+  /* Theme Colors (Strict/Minimal Palette) */
+  --color-bg-page-start: hsl(0, 0%, 98%);
+  --color-bg-page-end: hsl(0, 0%, 98%);
   
   --color-card-bg: hsl(0, 0%, 100%);
-  --color-border: hsl(0, 0%, 10%);
+  --color-border: hsl(0, 0%, 85%);
   
-  --color-primary: hsl(199, 89%, 48%);
-  --color-primary-dark: hsl(199, 89%, 40%);
-  --color-primary-light: hsl(199, 89%, 95%);
+  --color-primary: hsl(210, 80%, 50%);
+  --color-primary-dark: hsl(210, 80%, 40%);
+  --color-primary-light: hsl(210, 80%, 95%);
   
-  --color-success: hsl(142, 72%, 40%);
-  --color-success-dark: hsl(142, 72%, 32%);
-  --color-success-light: hsl(142, 72%, 95%);
+  --color-success: hsl(142, 60%, 45%);
+  --color-success-dark: hsl(142, 60%, 35%);
+  --color-success-light: hsl(142, 60%, 95%);
   
-  --color-danger: hsl(350, 89%, 55%);
-  --color-danger-dark: hsl(350, 89%, 45%);
-  --color-danger-light: hsl(350, 89%, 96%);
+  --color-danger: hsl(350, 70%, 55%);
+  --color-danger-dark: hsl(350, 70%, 45%);
+  --color-danger-light: hsl(350, 70%, 95%);
 
-  --color-warning: hsl(25, 95%, 53%);
-  --color-warning-dark: hsl(25, 95%, 45%);
+  --color-warning: hsl(35, 90%, 55%);
+  --color-warning-dark: hsl(35, 90%, 45%);
   
-  --color-leon: hsl(84, 81%, 44%);
-  --color-leon-dark: hsl(84, 81%, 36%);
+  --color-leon: hsl(150, 40%, 50%);
+  --color-leon-dark: hsl(150, 40%, 40%);
   
-  --color-text-main: hsl(0, 0%, 10%);
-  --color-text-muted: hsl(0, 0%, 40%);
-  --color-inline-code-bg: hsl(0, 0%, 94%);
+  --color-text-main: hsl(0, 0%, 15%);
+  --color-text-muted: hsl(0, 0%, 45%);
+  --color-inline-code-bg: hsl(0, 0%, 92%);
   
   /* Borders & Shadows */
-  --border-width: 3px;
-  --border-radius-sm: 12px;
-  --border-radius-md: 18px;
-  --border-radius-lg: 24px;
+  --border-width: 1px;
+  --border-radius-sm: 6px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 16px;
   
-  --shadow-depth: 6px;
-  --shadow-depth-sm: 4px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-depth: 0px; /* Fallback for legacy inline styles */
   
-  --transition-fast: 0.1s ease;
-  --transition-normal: 0.2s ease;
-  --transition-bounce: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.25s ease-in-out;
+  --transition-bounce: 0.25s ease-in-out; /* Removed bounce for strict design */
 }
 
-/* Cyberpunk Gamified Dark Theme */
+/* Strict Dark Theme */
 html[data-theme="dark"] {
-  --color-bg-page-start: hsl(222, 28%, 10%);
-  --color-bg-page-end: hsl(222, 33%, 6%);
+  --color-bg-page-start: hsl(220, 10%, 12%);
+  --color-bg-page-end: hsl(220, 10%, 12%);
   
-  --color-card-bg: hsl(222, 22%, 15%);
-  --color-border: hsl(0, 0%, 90%);
+  --color-card-bg: hsl(220, 10%, 16%);
+  --color-border: hsl(220, 10%, 25%);
   
-  --color-primary: hsl(199, 89%, 55%);
-  --color-primary-dark: hsl(199, 89%, 48%);
-  --color-primary-light: hsl(199, 89%, 16%);
+  --color-primary: hsl(210, 80%, 55%);
+  --color-primary-dark: hsl(210, 80%, 45%);
+  --color-primary-light: hsl(210, 80%, 20%);
   
-  --color-success: hsl(142, 72%, 48%);
-  --color-success-dark: hsl(142, 72%, 40%);
-  --color-success-light: hsl(142, 72%, 14%);
+  --color-success: hsl(142, 50%, 50%);
+  --color-success-dark: hsl(142, 50%, 40%);
+  --color-success-light: hsl(142, 50%, 15%);
   
-  --color-danger: hsl(350, 89%, 60%);
-  --color-danger-dark: hsl(350, 89%, 50%);
-  --color-danger-light: hsl(350, 89%, 16%);
+  --color-danger: hsl(350, 70%, 60%);
+  --color-danger-dark: hsl(350, 70%, 50%);
+  --color-danger-light: hsl(350, 70%, 15%);
 
-  --color-warning: hsl(25, 95%, 58%);
-  --color-warning-dark: hsl(25, 95%, 48%);
+  --color-warning: hsl(35, 90%, 60%);
+  --color-warning-dark: hsl(35, 90%, 50%);
   
-  --color-leon: hsl(84, 81%, 50%);
-  --color-leon-dark: hsl(84, 81%, 40%);
+  --color-leon: hsl(150, 30%, 40%);
+  --color-leon-dark: hsl(150, 30%, 30%);
   
-  --color-text-main: hsl(0, 0%, 92%);
-  --color-text-muted: hsl(222, 12%, 65%);
-  --color-inline-code-bg: hsl(222, 15%, 22%);
+  --color-text-main: hsl(0, 0%, 90%);
+  --color-text-muted: hsl(220, 10%, 60%);
+  --color-inline-code-bg: hsl(220, 10%, 22%);
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
 }

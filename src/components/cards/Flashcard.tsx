@@ -1,7 +1,18 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import js from 'react-syntax-highlighter/dist/esm/languages/prism/javascript';
+import ts from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
+import css from 'react-syntax-highlighter/dist/esm/languages/prism/css';
+import markdown from 'react-syntax-highlighter/dist/esm/languages/prism/markdown';
+import json from 'react-syntax-highlighter/dist/esm/languages/prism/json';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+SyntaxHighlighter.registerLanguage('javascript', js);
+SyntaxHighlighter.registerLanguage('typescript', ts);
+SyntaxHighlighter.registerLanguage('css', css);
+SyntaxHighlighter.registerLanguage('markdown', markdown);
+SyntaxHighlighter.registerLanguage('json', json);
 
 export interface FlashcardProps {
   front: string;
@@ -27,7 +38,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({
   // Custom component mappings for ReactMarkdown
   const markdownComponents = {
     code(props: any) {
-      const { children, className, node, ...rest } = props;
+      const { children, className, node: _node, ...rest } = props;
       const match = /language-(\w+)/.exec(className || '');
       
       return match ? (
