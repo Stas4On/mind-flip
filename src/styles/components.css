@@ -124,12 +124,13 @@
   border-radius: var(--border-radius-lg);
   padding: 30px;
   background-color: var(--color-card-bg);
-  box-shadow: 0 var(--shadow-depth) 0 var(--color-border);
+  box-shadow: 0 var(--shadow-depth) 0 var(--color-border), 0 10px 20px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* Space for watermark / hint */
   align-items: center;
   overflow: hidden;
+  transition: box-shadow var(--transition-fast);
 }
 
 .flashcard-back {
@@ -139,10 +140,17 @@
 /* Card flip hover micro-interaction */
 .flashcard:hover:not(.flipped) {
   transform: translateY(-4px);
-  box-shadow: 0 calc(var(--shadow-depth) + 4px) 0 var(--color-border);
 }
 .flashcard:hover.flipped {
   transform: rotateY(180deg) translateY(-4px);
+}
+
+.flashcard:hover:not(.flipped) .flashcard-front {
+  box-shadow: 0 calc(var(--shadow-depth) + 4px) 0 var(--color-border), 0 14px 28px rgba(0, 0, 0, 0.14);
+}
+
+.flashcard:hover.flipped .flashcard-back {
+  box-shadow: 0 calc(var(--shadow-depth) + 4px) 0 var(--color-border), 0 14px 28px rgba(0, 0, 0, 0.14);
 }
 
 /* Content Area inside cards */
