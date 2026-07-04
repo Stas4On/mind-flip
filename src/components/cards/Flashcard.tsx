@@ -38,7 +38,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({
   // Custom component mappings for ReactMarkdown
   const markdownComponents = {
     code(props: any) {
-      const { children, className, node, ...rest } = props;
+      const { children, className, node: _node, ...rest } = props;
       const match = /language-(\w+)/.exec(className || '');
       
       return match ? (
