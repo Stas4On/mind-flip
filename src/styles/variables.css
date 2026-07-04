@@ -31,6 +31,7 @@
   
   --color-text-main: hsl(0, 0%, 10%);
   --color-text-muted: hsl(0, 0%, 40%);
+  --color-inline-code-bg: hsl(0, 0%, 94%);
   
   /* Borders & Shadows */
   --border-width: 3px;
@@ -44,4 +45,35 @@
   --transition-fast: 0.1s ease;
   --transition-normal: 0.2s ease;
   --transition-bounce: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Cyberpunk Gamified Dark Theme */
+html[data-theme="dark"] {
+  --color-bg-page-start: hsl(222, 28%, 10%);
+  --color-bg-page-end: hsl(222, 33%, 6%);
+  
+  --color-card-bg: hsl(222, 22%, 15%);
+  --color-border: hsl(0, 0%, 90%);
+  
+  --color-primary: hsl(199, 89%, 55%);
+  --color-primary-dark: hsl(199, 89%, 48%);
+  --color-primary-light: hsl(199, 89%, 16%);
+  
+  --color-success: hsl(142, 72%, 48%);
+  --color-success-dark: hsl(142, 72%, 40%);
+  --color-success-light: hsl(142, 72%, 14%);
+  
+  --color-danger: hsl(350, 89%, 60%);
+  --color-danger-dark: hsl(350, 89%, 50%);
+  --color-danger-light: hsl(350, 89%, 16%);
+
+  --color-warning: hsl(25, 95%, 58%);
+  --color-warning-dark: hsl(25, 95%, 48%);
+  
+  --color-leon: hsl(84, 81%, 50%);
+  --color-leon-dark: hsl(84, 81%, 40%);
+  
+  --color-text-main: hsl(0, 0%, 92%);
+  --color-text-muted: hsl(222, 12%, 65%);
+  --color-inline-code-bg: hsl(222, 15%, 22%);
 }

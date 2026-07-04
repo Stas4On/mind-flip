@@ -4,6 +4,7 @@ import { getDeckCards, updateCardProgress, type Card } from '../services/db';
 import { Flashcard } from '../components/cards/Flashcard';
 import { Leon, type LeonMood } from '../components/mascot/Leon';
 import { Button } from '../components/ui/Button';
+import { ThemeToggle } from '../components/ui/ThemeToggle';
 import { isCardDue } from '../lib/leitner';
 import { ArrowLeft, Check, X, RefreshCw, Award, Eye } from 'lucide-react';
 
@@ -162,9 +163,12 @@ export const StudySession: React.FC = () => {
         >
           <ArrowLeft size={20} /> Выйти
         </button>
-        <span style={{ fontWeight: 800, fontSize: '1.1rem', backgroundColor: 'var(--color-primary-light)', padding: '4px 12px', border: '2px solid var(--color-border)', borderRadius: '20px' }}>
-          Карточка {currentIndex + 1} из {studyQueue.length} {cramMode && '⚡'}
-        </span>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <ThemeToggle />
+          <span style={{ fontWeight: 800, fontSize: '1.1rem', backgroundColor: 'var(--color-primary-light)', padding: '4px 12px', border: '2px solid var(--color-border)', borderRadius: '20px' }}>
+            Карточка {currentIndex + 1} из {studyQueue.length} {cramMode && '⚡'}
+          </span>
+        </div>
       </header>
 
       {/* Progress Bar */}

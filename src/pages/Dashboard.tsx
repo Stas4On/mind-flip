@@ -5,6 +5,7 @@ import { onAuthStateChanged, signOut, signIn, signUp, signInAsGuest, type AppUse
 import { isFirebaseConfigured } from '../lib/firebase';
 import { Leon } from '../components/mascot/Leon';
 import { Button } from '../components/ui/Button';
+import { ThemeToggle } from '../components/ui/ThemeToggle';
 import { Plus, Play, Settings, Brain, LogOut, Cloud, Database, Lock, Mail } from 'lucide-react';
 import { isCardDue } from '../lib/leitner';
 
@@ -310,9 +311,12 @@ export const Dashboard: React.FC = () => {
             Mind<span style={{ color: 'var(--color-primary)' }}>Flip</span>
           </h1>
         </div>
-        <Button variant="outline" size="sm" icon={<Plus size={18} />} onClick={() => setShowNewDeckForm(true)}>
-          Новая колода
-        </Button>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <ThemeToggle />
+          <Button variant="outline" size="sm" icon={<Plus size={18} />} onClick={() => setShowNewDeckForm(true)}>
+            Новая колода
+          </Button>
+        </div>
       </header>
 
       {/* Leon Mascot Welcomer */}

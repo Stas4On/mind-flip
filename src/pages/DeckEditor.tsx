@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getDecks, getDeckCards, createCard, deleteCard, type Deck, type Card } from '../services/db';
 import { Flashcard } from '../components/cards/Flashcard';
 import { Button } from '../components/ui/Button';
+import { ThemeToggle } from '../components/ui/ThemeToggle';
 import { ArrowLeft, Plus, Trash2, Eye } from 'lucide-react';
 
 export const DeckEditor: React.FC = () => {
@@ -89,17 +90,20 @@ export const DeckEditor: React.FC = () => {
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '30px 20px', display: 'flex', flexDirection: 'column', gap: '30px' }} className="animate-pop">
       
       {/* Editor Header */}
-      <header style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-        <button 
-          onClick={() => navigate('/')} 
-          style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 800, color: 'var(--color-text-main)', fontSize: '1rem' }}
-        >
-          <ArrowLeft size={20} /> Назад
-        </button>
-        <div>
-          <h1 style={{ fontSize: '1.8rem' }}>🛠️ Редактор: {deck.name}</h1>
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem', fontWeight: 500 }}>{deck.description}</p>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <button 
+            onClick={() => navigate('/')} 
+            style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 800, color: 'var(--color-text-main)', fontSize: '1rem' }}
+          >
+            <ArrowLeft size={20} /> Назад
+          </button>
+          <div>
+            <h1 style={{ fontSize: '1.8rem' }}>🛠️ Редактор: {deck.name}</h1>
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem', fontWeight: 500 }}>{deck.description}</p>
+          </div>
         </div>
+        <ThemeToggle />
       </header>
 
       {/* Main Workspace Layout */}
