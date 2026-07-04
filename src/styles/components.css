@@ -1,0 +1,94 @@
+/* Gamified Tactile Button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-primary);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+  text-decoration: none;
+}
+
+/* 3D Push Shadow Effect */
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  --btn-shadow-depth: var(--shadow-depth-sm);
+  box-shadow: 0 var(--btn-shadow-depth) 0 var(--color-border);
+}
+
+.btn-md {
+  padding: 12px 24px;
+  font-size: 1rem;
+  --btn-shadow-depth: var(--shadow-depth);
+  box-shadow: 0 var(--btn-shadow-depth) 0 var(--color-border);
+}
+
+.btn-lg {
+  padding: 16px 32px;
+  font-size: 1.2rem;
+  --btn-shadow-depth: 8px;
+  box-shadow: 0 var(--btn-shadow-depth) 0 var(--color-border);
+  border-radius: var(--border-radius-md);
+}
+
+/* Click / Active State */
+.btn:active {
+  transform: translateY(var(--btn-shadow-depth));
+  box-shadow: 0 0 0 var(--color-border);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: 0 var(--btn-shadow-depth) 0 var(--color-border) !important;
+}
+
+/* Color Variants */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-card-bg);
+}
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-success {
+  background-color: var(--color-success);
+  color: var(--color-card-bg);
+}
+.btn-success:hover:not(:disabled) {
+  background-color: var(--color-success-dark);
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+  color: var(--color-card-bg);
+}
+.btn-danger:hover:not(:disabled) {
+  background-color: var(--color-danger-dark);
+}
+
+.btn-warning {
+  background-color: var(--color-warning);
+  color: var(--color-card-bg);
+}
+.btn-warning:hover:not(:disabled) {
+  background-color: var(--color-warning-dark);
+}
+
+.btn-outline {
+  background-color: var(--color-card-bg);
+  color: var(--color-text-main);
+}
+.btn-outline:hover:not(:disabled) {
+  background-color: var(--color-primary-light);
+}

@@ -1,122 +1,110 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from 'react';
+import { Button } from './components/ui/Button';
+import { Check, X, RefreshCw, Star, Trash2 } from 'lucide-react';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div style={{ 
+      maxWidth: '800px', 
+      margin: '0 auto', 
+      padding: '40px 20px', 
+      display: 'flex', 
+      flexDirection: 'column', 
+      gap: '40px' 
+    }} className="animate-pop">
+      
+      {/* Header */}
+      <header style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <h1 style={{ 
+          fontSize: '3rem', 
+          color: 'var(--color-text-main)', 
+          textShadow: '2px 2px 0px var(--color-bg-page-end)',
+          marginBottom: '10px'
+        }} className="animate-float">
+          🦖 MindFlip Design System
+        </h1>
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '1.2rem', fontWeight: 500 }}>
+          Тактильный игровой UI-кит с 3D эффектами
+        </p>
+      </header>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
+      {/* Button Variants Section */}
+      <section style={{ 
+        background: 'var(--color-card-bg)', 
+        border: 'var(--border-width) solid var(--color-border)', 
+        borderRadius: 'var(--border-radius-md)', 
+        padding: '30px',
+        boxShadow: '0 var(--shadow-depth) 0 var(--color-border)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px'
+      }}>
+        <h2>🎨 Варианты кнопок (3D-эффект при нажатии)</h2>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
+          <Button variant="primary">Primary Sky</Button>
+          <Button variant="success" icon={<Check size={18} />}>Помню</Button>
+          <Button variant="danger" icon={<X size={18} />}>Забыл</Button>
+          <Button variant="warning" icon={<Star size={18} />}>Избранное</Button>
+          <Button variant="outline" icon={<Trash2 size={18} />}>Удалить</Button>
         </div>
       </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {/* Button Sizes Section */}
+      <section style={{ 
+        background: 'var(--color-card-bg)', 
+        border: 'var(--border-width) solid var(--color-border)', 
+        borderRadius: 'var(--border-radius-md)', 
+        padding: '30px',
+        boxShadow: '0 var(--shadow-depth) 0 var(--color-border)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px'
+      }}>
+        <h2>📏 Размеры кнопок</h2>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
+          <Button size="sm" variant="outline">Small Size</Button>
+          <Button size="md" variant="primary">Medium Size</Button>
+          <Button size="lg" variant="success" icon={<Check size={24} />}>Large Button</Button>
+        </div>
+      </section>
+
+      {/* Interactive State Section */}
+      <section style={{ 
+        background: 'var(--color-card-bg)', 
+        border: 'var(--border-width) solid var(--color-border)', 
+        borderRadius: 'var(--border-radius-md)', 
+        padding: '30px',
+        boxShadow: '0 var(--shadow-depth) 0 var(--color-border)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px',
+        alignItems: 'center'
+      }}>
+        <h2>⚡ Интерактивный кликер</h2>
+        <p style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Счётчик: {count}</p>
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <Button 
+            variant="primary" 
+            size="lg" 
+            onClick={() => setCount(count + 1)}
+          >
+            Кликни меня!
+          </Button>
+          <Button 
+            variant="outline" 
+            size="lg" 
+            icon={<RefreshCw size={20} />} 
+            onClick={() => setCount(0)}
+          >
+            Сброс
+          </Button>
+        </div>
+      </section>
+
+    </div>
+  );
 }
 
-export default App
+export default App;
