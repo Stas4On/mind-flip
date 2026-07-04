@@ -27,6 +27,7 @@ body {
 /* Playful custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px; /* Sizing for horizontal scrollbars */
 }
 ::-webkit-scrollbar-track {
   background: transparent;
@@ -37,7 +38,7 @@ body {
   border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-main);
+  background: var(--color-primary); /* Standout primary color on hover, prevents merging with dark code blocks */
 }
 
 /* Headings */
