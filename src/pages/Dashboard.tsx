@@ -8,6 +8,7 @@ import { Button } from '../components/ui/Button';
 import { ThemeToggle } from '../components/ui/ThemeToggle';
 import { Plus, Play, Settings, Brain, LogOut, Cloud, Database, Lock, Mail } from 'lucide-react';
 import { isCardDue } from '../lib/leitner';
+import styles from './Dashboard.module.css';
 
 export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -145,8 +146,8 @@ export const Dashboard: React.FC = () => {
   // 1. Loading Screen
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <h2 style={{ fontWeight: 800, color: 'var(--color-text-muted)' }}>Загрузка приложения...</h2>
+      <div className={styles.loadingScreen}>
+        <h2 className={styles.loadingText}>Загрузка приложения...</h2>
       </div>
     );
   }
@@ -154,43 +155,26 @@ export const Dashboard: React.FC = () => {
   // 2. Authentication Screen (when Firebase is configured and user is logged out)
   if (!user) {
     return (
-      <div style={{ maxWidth: '450px', margin: '80px auto', padding: '0 20px' }} className="animate-pop">
-        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <Brain size={48} color="var(--color-primary)" style={{ marginBottom: '10px' }} className="animate-float" />
-          <h1 style={{ fontSize: '2.2rem' }}>MindFlip</h1>
-          <p style={{ color: 'var(--color-text-muted)', fontWeight: 600 }}>Обучение программированию по флеш-карточкам</p>
+      <div className={`${styles.authContainer} animate-pop`}>
+        <div className={styles.authHeader}>
+          <Brain size={48} color="var(--color-primary)" className={`${styles.authLogo} animate-float`} />
+          <h1 className={styles.authTitle}>MindFlip</h1>
+          <p className={styles.authSubtitle}>Обучение программированию по флеш-карточкам</p>
         </div>
 
-        <form onSubmit={handleAuthSubmit} style={{
-          background: 'var(--color-card-bg)',
-          border: 'var(--border-width) solid var(--color-border)',
-          borderRadius: 'var(--border-radius-lg)',
-          padding: '30px',
-          boxShadow: '0 var(--shadow-depth) 0 var(--color-border)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px'
-        }}>
-          <h2 style={{ fontSize: '1.4rem', textAlign: 'center' }}>
+        <form onSubmit={handleAuthSubmit} className={styles.authForm}>
+          <h2 className={styles.authFormTitle}>
             {isSignUp ? '✨ Регистрация' : '🔐 Вход в аккаунт'}
           </h2>
 
           {authError && (
-            <div style={{
-              backgroundColor: 'var(--color-danger-light)',
-              color: 'var(--color-danger-dark)',
-              border: '2px solid var(--color-border)',
-              borderRadius: 'var(--border-radius-sm)',
-              padding: '10px 14px',
-              fontSize: '0.9rem',
-              fontWeight: 600
-            }}>
+            <div className={styles.authError}>
               {authError}
             </div>
           )}
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <div className={styles.inputGroup}>
+            <label className={styles.inputLabel}>
               <Mail size={14} /> Email
             </label>
             <input
@@ -199,19 +183,11 @@ export const Dashboard: React.FC = () => {
               onChange={e => setEmail(e.target.value)}
               placeholder="your-email@domain.com"
               required
-              style={{
-                padding: '12px',
-                border: 'var(--border-width) solid var(--color-border)',
-                borderRadius: 'var(--border-radius-sm)',
-                fontFamily: 'var(--font-primary)',
-                fontWeight: 600,
-                outline: 'none'
-              }}
             />
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <div className={styles.inputGroup}>
+            <label className={styles.inputLabel}>
               <Lock size={14} /> Пароль
             </label>
             <input
@@ -220,14 +196,6 @@ export const Dashboard: React.FC = () => {
               onChange={e => setPassword(e.target.value)}
               placeholder="••••••••"
               required
-              style={{
-                padding: '12px',
-                border: 'var(--border-width) solid var(--color-border)',
-                borderRadius: 'var(--border-radius-sm)',
-                fontFamily: 'var(--font-primary)',
-                fontWeight: 600,
-                outline: 'none'
-              }}
             />
           </div>
 
@@ -235,20 +203,20 @@ export const Dashboard: React.FC = () => {
             {authLoading ? 'Загрузка...' : isSignUp ? 'Зарегистрироваться' : 'Войти'}
           </Button>
 
-          <div style={{ textAlign: 'center', fontSize: '0.9rem', fontWeight: 600, marginTop: '4px' }}>
-            <span style={{ color: 'var(--color-text-muted)' }}>
+          <div className={styles.authSwitch}>
+            <span className={styles.authSwitchText}>
               {isSignUp ? 'Уже есть аккаунт? ' : 'Новый пользователь? '}
             </span>
             <button
               type="button"
               onClick={() => setIsSignUp(!isSignUp)}
-              style={{ background: 'none', border: 'none', color: 'var(--color-primary-dark)', cursor: 'pointer', fontWeight: 800, textDecoration: 'underline' }}
+              className={styles.authSwitchBtn}
             >
               {isSignUp ? 'Войти в аккаунт' : 'Создать аккаунт'}
             </button>
           </div>
 
-          <div style={{ borderTop: '2px dashed var(--color-border)', margin: '10px 0 5px 0' }} />
+          <div className={styles.authDivider} />
 
           <Button type="button" variant="outline" onClick={handleGuestLogin} disabled={authLoading}>
             Войти как гость (Локально)
@@ -260,43 +228,24 @@ export const Dashboard: React.FC = () => {
 
   // 3. Regular Authenticated Dashboard Screen
   return (
-    <div style={{ maxWidth: '900px', margin: '0 auto', padding: '30px 20px', display: 'flex', flexDirection: 'column', gap: '30px' }} className="animate-pop">
+    <div className={`${styles.dashboardContainer} animate-pop`}>
       
       {/* Synchronization Mode Banner */}
       {isFirebaseConfigured ? (
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          backgroundColor: 'var(--color-success-light)',
-          color: 'var(--color-success-dark)',
-          border: '2px solid var(--color-border)',
-          borderRadius: 'var(--border-radius-sm)',
-          padding: '8px 16px',
-          fontSize: '0.85rem',
-          fontWeight: 700
-        }}>
+        <div className={styles.cloudBanner}>
           <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Cloud size={16} /> Облачная база активна ({user.isAnonymous ? 'Гостевой режим' : user.email})
           </span>
           <button 
             onClick={handleSignOut} 
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-danger-dark)', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+            className={styles.cloudSignOutBtn}
           >
             <LogOut size={14} /> Выйти
           </button>
         </div>
       ) : (
-        <div style={{
-          backgroundColor: 'var(--color-primary-light)',
-          border: '2px solid var(--color-border)',
-          borderRadius: 'var(--border-radius-sm)',
-          padding: '12px 16px',
-          fontSize: '0.85rem',
-          fontWeight: 600,
-          lineHeight: 1.4
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 800, color: 'var(--color-primary-dark)', marginBottom: '4px' }}>
+        <div className={styles.localBanner}>
+          <div className={styles.localBannerHeader}>
             <Database size={16} /> Локальный демо-режим (данные в localStorage)
           </div>
           Для включения облачной синхронизации Firestore создайте файл <code>.env.local</code> в корне проекта с переменными <code>VITE_FIREBASE_API_KEY</code> и <code>VITE_FIREBASE_PROJECT_ID</code>.
@@ -304,14 +253,14 @@ export const Dashboard: React.FC = () => {
       )}
 
       {/* App Branding Header */}
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      <header className={styles.header}>
+        <div className={styles.brandContainer}>
           <Brain size={36} color="var(--color-primary)" strokeWidth={2.5} />
-          <h1 style={{ fontSize: '2rem', textShadow: '1px 1px 0 var(--color-bg-page-end)' }}>
-            Mind<span style={{ color: 'var(--color-primary)' }}>Flip</span>
+          <h1 className={styles.brandTitle}>
+            Mind<span className={styles.brandSpan}>Flip</span>
           </h1>
         </div>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <div className={styles.headerActions}>
           <ThemeToggle />
           <Button variant="outline" size="sm" icon={<Plus size={18} />} onClick={() => setShowNewDeckForm(true)}>
             Новая колода
@@ -320,56 +269,26 @@ export const Dashboard: React.FC = () => {
       </header>
 
       {/* Leon Mascot Welcomer */}
-      <section style={{
-        background: 'var(--color-card-bg)',
-        border: 'var(--border-width) solid var(--color-border)',
-        borderRadius: 'var(--border-radius-lg)',
-        padding: '24px 30px',
-        boxShadow: '0 var(--shadow-depth) 0 var(--color-border)',
-        display: 'flex',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: '24px',
-        position: 'relative'
-      }}>
+      <section className={styles.mascotPanel}>
         <div className="animate-float">
           <Leon mood={leonMood} size={130} />
         </div>
-        <div style={{ flex: 1, minWidth: '250px' }}>
+        <div className={styles.mascotContent}>
           {/* Speech Bubble Arrow */}
-          <div style={{
-            position: 'absolute',
-            left: '144px',
-            top: '50%',
-            transform: 'translateY(-50%) rotate(45deg)',
-            width: '16px',
-            height: '16px',
-            backgroundColor: 'var(--color-card-bg)',
-            borderLeft: 'var(--border-width) solid var(--color-border)',
-            borderBottom: 'var(--border-width) solid var(--color-border)',
-            display: 'none' // Hide on mobile wrapping
-          }} className="speech-arrow" />
+          <div className={`${styles.speechArrow} speech-arrow`} />
           
-          <div style={{
-            border: 'var(--border-width) solid var(--color-border)',
-            borderRadius: 'var(--border-radius-md)',
-            padding: '16px 20px',
-            backgroundColor: 'var(--color-primary-light)',
-            fontWeight: 700,
-            fontSize: '1.1rem',
-            position: 'relative'
-          }}>
+          <div className={styles.speechBubble}>
             {leonSpeech}
           </div>
 
-          <div style={{ display: 'flex', gap: '20px', marginTop: '16px' }}>
+          <div className={styles.mascotStats}>
             <div>
-              <span style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', fontWeight: 600 }}>Всего карточек:</span>
-              <div style={{ fontSize: '1.4rem', fontWeight: 800 }}>{totalCards}</div>
+              <span className={styles.statItemLabel}>Всего карточек:</span>
+              <div className={styles.statItemVal}>{totalCards}</div>
             </div>
-            <div style={{ borderLeft: '2px solid var(--color-border)', paddingLeft: '20px' }}>
-              <span style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', fontWeight: 600 }}>К повторению:</span>
-              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: totalDue > 0 ? 'var(--color-warning)' : 'var(--color-success)' }}>{totalDue}</div>
+            <div className={styles.statItemRight}>
+              <span className={styles.statItemLabel}>К повторению:</span>
+              <div className={styles.statItemVal} style={{ color: totalDue > 0 ? 'var(--color-warning)' : 'var(--color-success)' }}>{totalDue}</div>
             </div>
           </div>
         </div>
@@ -377,74 +296,33 @@ export const Dashboard: React.FC = () => {
 
       {/* New Deck Modal Overlay / Form */}
       {showNewDeckForm && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0,0,0,0.4)',
-          zIndex: 100,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '20px'
-        }}>
-          <form onSubmit={handleCreateDeck} style={{
-            background: 'var(--color-card-bg)',
-            border: 'var(--border-width) solid var(--color-border)',
-            borderRadius: 'var(--border-radius-lg)',
-            padding: '30px',
-            boxShadow: '0 var(--shadow-depth) 0 var(--color-border)',
-            maxWidth: '500px',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '20px'
-          }} className="animate-pop">
-            <h2 style={{ fontSize: '1.5rem' }}>🆕 Создание новой колоды</h2>
+        <div className={styles.modalOverlay}>
+          <form onSubmit={handleCreateDeck} className={`${styles.modalForm} animate-pop`}>
+            <h2 className={styles.modalTitle}>🆕 Создание новой колоды</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontWeight: 700, fontSize: '0.9rem' }}>Название колоды</label>
+            <div className={styles.inputGroup}>
+              <label className={styles.modalLabel}>Название колоды</label>
               <input
                 type="text"
                 value={newDeckName}
                 onChange={e => setNewDeckName(e.target.value)}
                 placeholder="Например: Основы React"
                 required
-                style={{
-                  padding: '12px',
-                  border: 'var(--border-width) solid var(--color-border)',
-                  borderRadius: 'var(--border-radius-sm)',
-                  fontFamily: 'var(--font-primary)',
-                  fontWeight: 600,
-                  fontSize: '1rem',
-                  outline: 'none'
-                }}
               />
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontWeight: 700, fontSize: '0.9rem' }}>Описание</label>
+            <div className={styles.inputGroup}>
+              <label className={styles.modalLabel}>Описание</label>
               <textarea
                 value={newDeckDesc}
                 onChange={e => setNewDeckDesc(e.target.value)}
                 placeholder="Краткое описание колоды..."
                 rows={3}
-                style={{
-                  padding: '12px',
-                  border: 'var(--border-width) solid var(--color-border)',
-                  borderRadius: 'var(--border-radius-sm)',
-                  fontFamily: 'var(--font-primary)',
-                  fontWeight: 600,
-                  fontSize: '1rem',
-                  outline: 'none',
-                  resize: 'none'
-                }}
+                style={{ resize: 'none' }}
               />
             </div>
 
-            <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end', marginTop: '10px' }}>
+            <div className={styles.modalActions}>
               <Button type="button" variant="outline" onClick={() => setShowNewDeckForm(false)}>Отмена</Button>
               <Button type="submit" variant="success">Создать</Button>
             </div>
@@ -453,51 +331,41 @@ export const Dashboard: React.FC = () => {
       )}
 
       {/* Decks Grid */}
-      <main style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        <h2 style={{ fontSize: '1.4rem' }}>📚 Ваши колоды</h2>
+      <main className={styles.mainSection}>
+        <h2 className={styles.sectionTitle}>📚 Ваши колоды</h2>
         {decks.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '40px', background: 'rgba(255,255,255,0.4)', borderRadius: 'var(--border-radius-md)', border: '2px dashed var(--color-border)' }}>
+          <div className={styles.emptyState}>
             <p style={{ fontWeight: 600, color: 'var(--color-text-muted)' }}>У вас пока нет ни одной колоды.</p>
             <Button variant="primary" style={{ marginTop: '16px' }} onClick={() => setShowNewDeckForm(true)}>Создать первую колоду</Button>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
+          <div className={styles.decksGrid}>
             {decks.map(deck => {
               const stats = deckStats[deck.id] || { total: 0, due: 0 };
               return (
-                <article key={deck.id} style={{
-                  background: 'var(--color-card-bg)',
-                  border: 'var(--border-width) solid var(--color-border)',
-                  borderRadius: 'var(--border-radius-md)',
-                  padding: '24px',
-                  boxShadow: '0 var(--shadow-depth) 0 var(--color-border)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  gap: '20px'
-                }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <h3 style={{ fontSize: '1.25rem' }}>{deck.name}</h3>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', fontWeight: 500, minHeight: '40px' }}>
+                <article key={deck.id} className={styles.deckCard}>
+                  <div className={styles.deckInfo}>
+                    <h3 className={styles.deckTitle}>{deck.name}</h3>
+                    <p className={styles.deckDesc}>
                       {deck.description || 'Нет описания.'}
                     </p>
                   </div>
 
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--color-primary-light)', padding: '10px 14px', borderRadius: 'var(--border-radius-sm)', border: '2px solid var(--color-border)' }}>
+                  <div className={styles.deckStatsRow}>
                     <div>
-                      <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--color-text-muted)' }}>Повторить</span>
-                      <div style={{ fontSize: '1.15rem', fontWeight: 800, color: stats.due > 0 ? 'var(--color-warning)' : 'var(--color-success)' }}>
+                      <span className={styles.deckStatsLabel}>Повторить</span>
+                      <div className={styles.deckStatsVal} style={{ color: stats.due > 0 ? 'var(--color-warning)' : 'var(--color-success)' }}>
                         {stats.due} карточек
                       </div>
                     </div>
-                    <div style={{ borderLeft: '2px solid var(--color-border)', height: '25px' }} />
+                    <div className={styles.deckStatsDivider} />
                     <div style={{ textAlign: 'right' }}>
-                      <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--color-text-muted)' }}>Всего</span>
-                      <div style={{ fontSize: '1.15rem', fontWeight: 800 }}>{stats.total}</div>
+                      <span className={styles.deckStatsLabel}>Всего</span>
+                      <div className={styles.deckStatsVal}>{stats.total}</div>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', gap: '10px' }}>
+                  <div className={styles.deckActions}>
                     <Button 
                       variant={stats.due > 0 ? 'success' : 'outline'}
                       size="sm"
