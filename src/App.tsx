@@ -4,6 +4,7 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
 const StudySession = lazy(() => import('./pages/StudySession').then(m => ({ default: m.StudySession })));
 const DeckEditor = lazy(() => import('./pages/DeckEditor').then(m => ({ default: m.DeckEditor })));
+const Explore = lazy(() => import('./pages/Explore').then(m => ({ default: m.Explore })));
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/study/:deckId" element={<StudySession />} />
           <Route path="/edit/:deckId" element={<DeckEditor />} />
+          <Route path="/explore" element={<Explore />} />
         </Routes>
       </Suspense>
     </Router>
