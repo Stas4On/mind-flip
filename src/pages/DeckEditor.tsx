@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getDecks, getDeckCards, createCard, deleteCard, deleteDeck, type Deck, type Card } from '../services/db';
+import { getDecks, getDeckCards, createCard, deleteCard, deleteDeck, updateCardContent, type Deck, type Card } from '../services/db';
 import { Flashcard } from '../components/cards/Flashcard';
 import { Button } from '../components/ui/Button';
+import { Spinner } from '../components/ui/Spinner';
 import { ThemeToggle } from '../components/ui/ThemeToggle';
-import { ArrowLeft, Plus, Trash2, Eye } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, Eye, Pencil, X } from 'lucide-react';
 import styles from './DeckEditor.module.css';
 
 export const DeckEditor: React.FC = () => {
@@ -22,6 +23,7 @@ export const DeckEditor: React.FC = () => {
   // Preview states
   const [previewFlipped, setPreviewFlipped] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [editingCardId, setEditingCardId] = useState<string | null>(null);
 
   useEffect(() => {
     loadDeckAndCards();
@@ -50,7 +52,12 @@ export const DeckEditor: React.FC = () => {
     setError(null);
 
     try {
-      await createCard(deckId, frontText, backText);
+      if (editingCardId !== null) {
+        await updateCardContent(deckId, editingCardId, frontText, backText);
+        setEditingCardId(null);
+      } else {
+        await createCard(deckId, frontText, backText);
+      }
       // Reset form to defaults
       setFrontText('### Новый вопрос?\n\n');
       setBackText('### Ответ\n\n');
@@ -58,9 +65,25 @@ export const DeckEditor: React.FC = () => {
       // Reload cards
       await loadDeckAndCards();
     } catch (err: any) {
-      console.error('Failed to add card', err);
-      setError(err.message || 'Не удалось добавить карточку');
+      console.error('Failed to save card', err);
+      setError(err.message || 'Не удалось сохранить изменения');
     }
+  };
+
+  const handleStartEditCard = (card: Card) => {
+    setEditingCardId(card.id);
+    setFrontText(card.front);
+    setBackText(card.back);
+    setPreviewFlipped(false);
+    setError(null);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingCardId(null);
+    setFrontText('### Новый вопрос?\n\n');
+    setBackText('### Ответ\n\n');
+    setPreviewFlipped(false);
+    setError(null);
   };
 
   const handleDeleteCard = async (cardId: string) => {
@@ -89,11 +112,7 @@ export const DeckEditor: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className={styles.loadingScreen}>
-        <h2 className={styles.loadingText}>Загрузка редактора...</h2>
-      </div>
-    );
+    return <Spinner fullScreen message="Загрузка редактора..." />;
   }
 
   if (!deck) {
@@ -144,7 +163,8 @@ export const DeckEditor: React.FC = () => {
           {/* Add Card Form */}
           <section className={styles.formSection}>
             <h2 className={styles.sectionTitle}>
-              <Plus size={20} /> Добавить карточку
+              {editingCardId !== null ? <Pencil size={20} /> : <Plus size={20} />}
+              {editingCardId !== null ? 'Редактировать карточку' : 'Добавить карточку'}
             </h2>
             
             <form onSubmit={handleAddCard} className={styles.formElement}>
@@ -188,9 +208,16 @@ export const DeckEditor: React.FC = () => {
                 </div>
               )}
 
-              <Button type="submit" variant="success" icon={<Plus size={18} />} className={styles.buttonSubmit}>
-                Добавить карточку
-              </Button>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <Button type="submit" variant="success" icon={editingCardId !== null ? <Pencil size={18} /> : <Plus size={18} />} className={styles.buttonSubmit}>
+                  {editingCardId !== null ? 'Сохранить' : 'Добавить карточку'}
+                </Button>
+                {editingCardId !== null && (
+                  <Button type="button" variant="outline" icon={<X size={18} />} onClick={handleCancelEdit}>
+                    Отмена
+                  </Button>
+                )}
+              </div>
             </form>
           </section>
 
@@ -209,14 +236,24 @@ export const DeckEditor: React.FC = () => {
                         {card.front.replace(/[#*`]/g, '').trim()}
                       </p>
                     </div>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      onClick={() => handleDeleteCard(card.id)} 
-                      icon={<Trash2 size={14} />} 
-                      className={styles.deleteButton}
-                      title="Удалить карточку"
-                    />
+                    <div style={{ display: 'inline-flex', gap: '8px' }}>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => handleStartEditCard(card)} 
+                        icon={<Pencil size={14} />} 
+                        className={styles.editButton}
+                        title="Редактировать карточку"
+                      />
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => handleDeleteCard(card.id)} 
+                        icon={<Trash2 size={14} />} 
+                        className={styles.deleteButton}
+                        title="Удалить карточку"
+                      />
+                    </div>
                   </div>
                 ))}
               </div>

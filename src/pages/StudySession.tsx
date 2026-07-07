@@ -4,6 +4,7 @@ import { getDeckCards, updateCardProgress, type Card } from '../services/db';
 import { Flashcard } from '../components/cards/Flashcard';
 import { Leon, type LeonMood } from '../components/mascot/Leon';
 import { Button } from '../components/ui/Button';
+import { Spinner } from '../components/ui/Spinner';
 import { ThemeToggle } from '../components/ui/ThemeToggle';
 import { isCardDue } from '../lib/leitner';
 import { ArrowLeft, Check, X, RefreshCw, Award, Eye } from 'lucide-react';
@@ -91,11 +92,7 @@ export const StudySession: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className={styles.loadingScreen}>
-        <h2 className={styles.loadingText}>Загрузка сессии...</h2>
-      </div>
-    );
+    return <Spinner fullScreen message="Загрузка сессии..." />;
   }
 
   if (studyQueue.length === 0 && cards.length > 0 && !cramMode) {
@@ -165,11 +162,7 @@ export const StudySession: React.FC = () => {
   const currentCard = studyQueue[currentIndex];
 
   if (!currentCard) {
-    return (
-      <div className={styles.loadingScreen}>
-        <h2 className={styles.loadingText}>Загрузка сессии...</h2>
-      </div>
-    );
+    return <Spinner fullScreen message="Загрузка сессии..." />;
   }
 
   const progressPercent = (currentIndex / studyQueue.length) * 100;
