@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createDeckWithCards } from '../services/db';
+import { getCurrentUser } from '../services/auth';
 import { Button } from '../components/ui/Button';
 import { ThemeToggle } from '../components/ui/ThemeToggle';
 import { ArrowLeft, Brain, BookOpen, Plus, Download, UploadCloud, HelpCircle, X } from 'lucide-react';
@@ -28,6 +29,9 @@ export const Explore: React.FC = () => {
   const [isImporting, setIsImporting] = useState(false);
   const [importError, setImportError] = useState<string | null>(null);
   
+  const user = getCurrentUser();
+  const isGuest = !user || user.isAnonymous;
+  
   // Format help modal state
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [helpTab, setHelpTab] = useState<'markdown' | 'json'>('markdown');
@@ -38,9 +42,9 @@ export const Explore: React.FC = () => {
     try {
       await createDeckWithCards(template.name, template.description, template.cards);
       navigate('/');
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to copy template deck', err);
-      setImportError('Не удалось скопировать шаблон колоды.');
+      setImportError(err.message || 'Не удалось скопировать шаблон колоды.');
     } finally {
       setLoadingDeckId(null);
     }
@@ -160,6 +164,20 @@ export const Explore: React.FC = () => {
         </div>
         <ThemeToggle />
       </header>
+
+      {/* Active Limits Info Banner */}
+      <div className={styles.limitsBanner}>
+        {isGuest ? (
+          <span>
+            💡 <strong>Режим Гостя:</strong> Доступно максимум 3 колоды и до 30 карточек в каждой. 
+            Зарегистрируйтесь через email, чтобы увеличить лимиты до 10 колод / 100 карточек и импортировать готовые шаблоны из каталога.
+          </span>
+        ) : (
+          <span>
+            ✅ <strong>Лимиты аккаунта:</strong> Доступно до 10 колод и до 100 карточек в каждой.
+          </span>
+        )}
+      </div>
 
       {/* Error alert if any */}
       {importError && (
