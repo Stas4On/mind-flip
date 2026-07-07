@@ -262,6 +262,9 @@ export const Dashboard: React.FC = () => {
         </div>
         <div className={styles.headerActions}>
           <ThemeToggle />
+          <Button variant="outline" size="sm" icon={<Brain size={18} />} onClick={() => navigate('/explore')}>
+            Каталог
+          </Button>
           <Button variant="outline" size="sm" icon={<Plus size={18} />} onClick={() => setShowNewDeckForm(true)}>
             Новая колода
           </Button>

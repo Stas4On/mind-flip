@@ -9,6 +9,7 @@ import {
   setDoc,
   updateDoc,
   deleteDoc,
+  writeBatch,
 } from 'firebase/firestore';
 
 export interface Card {
@@ -251,5 +252,61 @@ export async function deleteCard(deckId: string, cardId: string): Promise<void> 
     const cards = await getDeckCards(deckId);
     const filtered = cards.filter(c => c.id !== cardId);
     localStorage.setItem(`${CARDS_KEY_PREFIX}${deckId}`, JSON.stringify(filtered));
+  }
+}
+
+export async function createDeckWithCards(
+  name: string,
+  description: string,
+  cards: { front: string; back: string }[]
+): Promise<Deck> {
+  const user = getCurrentUser();
+  const newDeckId = `deck-${Date.now()}`;
+  const newDeck = {
+    name,
+    description,
+    createdAt: new Date().toISOString(),
+  };
+
+  if (isFirebaseConfigured && db && user) {
+    const batch = writeBatch(db!);
+    
+    // 1. Add deck creation to batch
+    const deckRef = doc(db!, 'users', user.uid, 'decks', newDeckId);
+    batch.set(deckRef, newDeck);
+
+    // 2. Add each card creation to batch
+    cards.forEach((card, index) => {
+      const cardId = `card-${Date.now()}-${index}`;
+      const cardRef = doc(db!, 'users', user.uid, 'decks', newDeckId, 'cards', cardId);
+      batch.set(cardRef, {
+        front: card.front,
+        back: card.back,
+        level: 1,
+        nextReviewDate: new Date().toISOString(),
+      });
+    });
+
+    // 3. Commit batch atomically
+    await batch.commit();
+    return { id: newDeckId, ...newDeck };
+  } else {
+    // Local storage fallback
+    initLocalStorageIfNeeded();
+    const decks = await getDecks();
+    const createdDeck = { id: newDeckId, ...newDeck };
+    decks.push(createdDeck);
+    localStorage.setItem(DECKS_KEY, JSON.stringify(decks));
+
+    const cardsToSave: Card[] = cards.map((card, index) => ({
+      id: `card-${Date.now()}-${index}`,
+      front: card.front,
+      back: card.back,
+      level: 1,
+      nextReviewDate: new Date().toISOString(),
+    }));
+    localStorage.setItem(`${CARDS_KEY_PREFIX}${newDeckId}`, JSON.stringify(cardsToSave));
+    
+    return createdDeck;
   }
 }
