@@ -273,3 +273,35 @@
   align-items: center;
   gap: 12px;
 }
+
+@media (max-width: 600px) {
+  .pageContainer {
+    padding: 16px 12px;
+    gap: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .headerLeft {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .limitsBanner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
