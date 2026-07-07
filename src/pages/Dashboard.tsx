@@ -67,18 +67,20 @@ export const Dashboard: React.FC = () => {
     setDataLoading(true);
     try {
       const allDecks = await getDecks();
-      setDecks(allDecks);
       
       const stats: Record<string, { total: number; due: number }> = {};
-      for (const deck of allDecks) {
+      await Promise.all(allDecks.map(async (deck) => {
         const cards = await getDeckCards(deck.id);
         const dueCount = cards.filter(c => isCardDue(c.nextReviewDate)).length;
         stats[deck.id] = {
           total: cards.length,
           due: dueCount
         };
-      }
+      }));
+
+      // Set both states at the end to prevent intermediate renders with 0 cards!
       setDeckStats(stats);
+      setDecks(allDecks);
     } catch (err) {
       console.error('Failed to load decks', err);
     } finally {
