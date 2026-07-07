@@ -4,8 +4,12 @@ import { createDeck, createCard } from '../services/db';
 import { Button } from '../components/ui/Button';
 import { ThemeToggle } from '../components/ui/ThemeToggle';
 import { ArrowLeft, Brain, BookOpen, Plus, Download, UploadCloud } from 'lucide-react';
-import catalogDecks from '../assets/catalog.json';
+import jsCatalog from '../assets/js-catalog.json';
+import reactCatalog from '../assets/react-catalog.json';
+import angularCatalog from '../assets/angular-catalog.json';
 import styles from './Explore.module.css';
+
+const catalogDecks = [...jsCatalog, ...reactCatalog, ...angularCatalog];
 
 interface CatalogDeck {
   id: string;
