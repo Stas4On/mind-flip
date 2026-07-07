@@ -310,3 +310,33 @@ export async function createDeckWithCards(
     return createdDeck;
   }
 }
+
+export async function deleteDeck(deckId: string): Promise<void> {
+  const user = getCurrentUser();
+
+  if (isFirebaseConfigured && db && user) {
+    const deckRef = doc(db!, 'users', user.uid, 'decks', deckId);
+    const cardsRef = collection(db!, 'users', user.uid, 'decks', deckId, 'cards');
+    const cardsSnap = await getDocs(cardsRef);
+    
+    const batch = writeBatch(db!);
+    
+    // 1. Add all cards deletion to the batch
+    cardsSnap.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+    
+    // 2. Add the parent deck deletion to the batch
+    batch.delete(deckRef);
+    
+    // 3. Commit atomically
+    await batch.commit();
+  } else {
+    // Local storage fallback
+    initLocalStorageIfNeeded();
+    const decks = await getDecks();
+    const filteredDecks = decks.filter(d => d.id !== deckId);
+    localStorage.setItem(DECKS_KEY, JSON.stringify(filteredDecks));
+    localStorage.removeItem(`${CARDS_KEY_PREFIX}${deckId}`);
+  }
+}

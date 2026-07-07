@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getDecks, getDeckCards, createCard, deleteCard, type Deck, type Card } from '../services/db';
+import { getDecks, getDeckCards, createCard, deleteCard, deleteDeck, type Deck, type Card } from '../services/db';
 import { Flashcard } from '../components/cards/Flashcard';
 import { Button } from '../components/ui/Button';
 import { ThemeToggle } from '../components/ui/ThemeToggle';
@@ -70,6 +70,21 @@ export const DeckEditor: React.FC = () => {
     }
   };
 
+  const handleDeleteDeck = async () => {
+    if (!deckId || !deck) return;
+    const confirmed = window.confirm(
+      `Вы уверены, что хотите полностью удалить колоду "${deck.name}" и все её карточки? Это действие невозможно отменить.`
+    );
+    if (!confirmed) return;
+    
+    try {
+      await deleteDeck(deckId);
+      navigate('/');
+    } catch (err) {
+      console.error('Failed to delete deck', err);
+    }
+  };
+
   if (loading) {
     return (
       <div className={styles.loadingScreen}>
@@ -104,7 +119,17 @@ export const DeckEditor: React.FC = () => {
             <p className={styles.description}>{deck.description}</p>
           </div>
         </div>
-        <ThemeToggle />
+        <div className={styles.headerRight}>
+          <Button 
+            variant="danger" 
+            size="sm" 
+            icon={<Trash2 size={16} />} 
+            onClick={handleDeleteDeck}
+          >
+            Удалить колоду
+          </Button>
+          <ThemeToggle />
+        </div>
       </header>
 
       {/* Main Workspace Layout */}

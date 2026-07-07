@@ -40,6 +40,12 @@
   gap: 20px;
 }
 
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .backButton {
   background: none;
   border: none;
