@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
 const StudySession = lazy(() => import('./pages/StudySession').then(m => ({ default: m.StudySession })));
