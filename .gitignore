@@ -26,3 +26,8 @@ dist-ssr
 # Antigravity custom files
 .agents/
 docs/
+
+# Technical design and plan files
+implementation_plan.md
+design_preview.md
+mindflip_architecture.md
