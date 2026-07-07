@@ -384,9 +384,14 @@
     gap: 16px;
   }
 
+  .brandContainer {
+    width: 100%;
+    justify-content: center;
+  }
+
   .headerActions {
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
   }
 
   .mascotPanel {

@@ -227,6 +227,11 @@
     width: 100%;
   }
 
+  .brandContainer {
+    width: 100%;
+    justify-content: center;
+  }
+
   .headerLeft {
     flex-direction: column;
     align-items: flex-start;
