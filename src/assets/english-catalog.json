@@ -1,0 +1,209 @@
+[
+  {
+    "id": "it-english",
+    "name": "English for Developers",
+    "description": "Английский для программистов: 50 ключевых профессиональных терминов, примеры использования и переводы.",
+    "cards": [
+      {
+        "front": "Immutable",
+        "back": "### Неизменяемый\n\n**Пример использования:**\n> Strings in JavaScript are immutable; they cannot be changed after creation.\n>\n> Строки в JavaScript неизменяемы; их нельзя изменить после создания."
+      },
+      {
+        "front": "Mutable",
+        "back": "### Изменяемый\n\n**Пример использования:**\n> Objects and arrays are mutable data structures.\n>\n> Объекты и массивы — это изменяемые структуры данных."
+      },
+      {
+        "front": "Inheritance",
+        "back": "### Наследование\n\n**Пример использования:**\n> Class inheritance allows a child class to adopt methods from a parent class.\n>\n> Наследование классов позволяет дочернему классу перенимать методы родительского класса."
+      },
+      {
+        "front": "Encapsulation",
+        "back": "### Инкапсуляция\n\n**Пример использования:**\n> Encapsulation hides the internal state of an object from direct access.\n>\n> Инкапсуляция скрывает внутреннее состояние объекта от прямого доступа."
+      },
+      {
+        "front": "Polymorphism",
+        "back": "### Полиморфизм\n\n**Пример использования:**\n> Polymorphism allows different classes to respond to the same method call in their own way.\n>\n> Polymorphism позволяет разным классам по-своему реагировать на вызов одного и того же метода."
+      },
+      {
+        "front": "Intercept",
+        "back": "### Перехватывать\n\n**Пример использования:**\n> We can use HTTP interceptors to attach a token to outgoing requests.\n>\n> Мы можем использовать HTTP-интерцепторы, чтобы прикреплять токен к исходящим запросам."
+      },
+      {
+        "front": "Evaluate",
+        "back": "### Оценивать / Вычислять значение\n\n**Пример использования:**\n> The JavaScript engine needs to evaluate this expression before continuing.\n>\n> Движок JavaScript должен вычислить это выражение перед тем, как продолжить."
+      },
+      {
+        "front": "Execution",
+        "back": "### Выполнение / Исполнение\n\n**Пример использования:**\n> The execution of the script was paused by the debugger.\n>\n> Выполнение скрипта было приостановлено отладчиком."
+      },
+      {
+        "front": "Invocation",
+        "back": "### Вызов (функции)\n\n**Пример использования:**\n> A recursive function requires a base case to stop further invocation.\n>\n> Рекурсивной функции требуется базовый случай, чтобы остановить дальнейшие вызовы."
+      },
+      {
+        "front": "Recursion",
+        "back": "### Рекурсия\n\n**Пример использования:**\n> Recursion can cause a stack overflow error if the depth is too high.\n>\n> Рекурсия может вызвать ошибку переполнения стека, если глубина слишком велика."
+      },
+      {
+        "front": "Thread",
+        "back": "### Поток (выполнения)\n\n**Пример использования:**\n> JavaScript is a single-threaded language, but it supports asynchronous operations.\n>\n> JavaScript — это однопоточный язык, но он поддерживает асинхронные операции."
+      },
+      {
+        "front": "Concurrency",
+        "back": "### Параллелизм / Конкурентность\n\n**Пример использования:**\n> Concurrent rendering improves the application responsiveness during heavy updates.\n>\n> Конкурентный рендеринг улучшает отзывчивость приложения во время тяжелых обновлений."
+      },
+      {
+        "front": "Synchronous",
+        "back": "### Синхронный\n\n**Пример использования:**\n> Synchronous code runs sequentially, blocking further execution until completed.\n>\n> Синхронный код выполняется последовательно, блокируя дальнейшее выполнение до завершения."
+      },
+      {
+        "front": "Asynchronous",
+        "back": "### Асинхронный\n\n**Пример использования:**\n> Asynchronous operations allow the browser to remain responsive while waiting for server data.\n>\n> Асинхронные операции позволяют браузеру оставаться отзывчивым во время ожидания данных от сервера."
+      },
+      {
+        "front": "Event Handler",
+        "back": "### Обработчик событий\n\n**Пример использования:**\n> Remember to remove the event handler when the component unmounts.\n>\n> Не забудьте удалить обработчик событий при размонтировании компонента."
+      },
+      {
+        "front": "Callback",
+        "back": "### Функция обратного вызова\n\n**Пример использования:**\n> Pass a callback function to run code after the animation finishes.\n>\n> Передайте функцию обратного вызова для запуска кода после завершения анимации."
+      },
+      {
+        "front": "Deprecated",
+        "back": "### Устаревший / Не рекомендуемый к использованию\n\n**Пример использования:**\n> This lifecycle method is deprecated and will be removed in the next major version.\n>\n> Этот метод жизненного цикла устарел и будет удален в следующей мажоритарной версии."
+      },
+      {
+        "front": "Legacy",
+        "back": "### Унаследованный / Старый (код или система)\n\n**Пример использования:**\n> It is difficult to maintain legacy code without proper documentation.\n>\n> Трудно поддерживать старый унаследованный код без надлежащей документации."
+      },
+      {
+        "front": "Compile",
+        "back": "### Компилировать\n\n**Пример использования:**\n> Typescript needs to compile code into plain JavaScript before browsers can run it.\n>\n> TypeScript должен скомпилировать код в чистый JavaScript перед тем, как браузеры смогут его запустить."
+      },
+      {
+        "front": "Transpile",
+        "back": "### Транспилировать (компилировать исходный код в исходный код другого языка)\n\n**Пример использования:**\n> Babel is used to transpile modern JS code into an older version for legacy browsers.\n>\n> Babel используется для транспиляции современного JS-кода в более старую версию для старых браузеров."
+      },
+      {
+        "front": "Pipeline",
+        "back": "### Конвейер / Пайплайн\n\n**Пример использования:**\n> We configured a CI/CD pipeline to automate testing and deployment.\n>\n> Мы настроили конвейер CI/CD для автоматизации тестирования и развертывания."
+      },
+      {
+        "front": "Deploy",
+        "back": "### Развертывать / Деплоить\n\n**Пример использования:**\n> We are ready to deploy the new features to production tonight.\n>\n> Мы готовы развернуть новые функции на продакшн сегодня вечером."
+      },
+      {
+        "front": "Dependency",
+        "back": "### Зависимость\n\n**Пример использования:**\n> Make sure to install this library as a dev dependency.\n>\n> Обязательно установите эту библиотеку как зависимость разработки (dev dependency)."
+      },
+      {
+        "front": "Lifecycle",
+        "back": "### Жизненный цикл\n\n**Пример использования:**\n> Understanding the component lifecycle is crucial for managing resources.\n>\n> Понимание жизненного цикла компонента критически важно для управления ресурсами."
+      },
+      {
+        "front": "Context",
+        "back": "### Контекст\n\n**Пример использования:**\n> Arrow functions do not bind their own execution context.\n>\n> Стрелочные функции не привязывают свой собственный контекст выполнения."
+      },
+      {
+        "front": "Scope",
+        "back": "### Область видимости\n\n**Пример использования:**\n> Let and const have block scope, whereas var has function scope.\n>\n> Let и const имеют блочную область видимости, в то время как var имеет функциональную область."
+      },
+      {
+        "front": "Garbage Collection",
+        "back": "### Сборка мусора\n\n**Пример использования:**\n> Garbage collection automatically frees up memory that is no longer reachable.\n>\n> Сборка мусора автоматически освобождает память, которая больше не доступна."
+      },
+      {
+        "front": "Memory Leak",
+        "back": "### Утечка памяти\n\n**Пример использования:**\n> A forgotten setInterval timer can easily cause a memory leak.\n>\n> Забытый таймер setInterval может легко вызвать утечку памяти."
+      },
+      {
+        "front": "Overhead",
+        "back": "### Накладные расходы / Избыточность\n\n**Пример использования:**\n> Adding too many state management libraries increases bundle overhead.\n>\n> Добавление слишком большого количества библиотек управления состоянием увеличивает избыточность бандла."
+      },
+      {
+        "front": "Boilerplate",
+        "back": "### Шаблонный код\n\n**Пример использования:**\n> Using modern frameworks reduces the amount of boilerplate code we need to write.\n>\n> Использование современных фреймворков сокращает количество шаблонного кода, который нам нужно писать."
+      },
+      {
+        "front": "Markup",
+        "back": "### Разметка\n\n**Пример использования:**\n> HTML is a markup language used to structure web page content.\n>\n> HTML — это язык разметки, используемый для структурирования содержимого веб-страницы."
+      },
+      {
+        "front": "Render",
+        "back": "### Отрисовывать / Рендерить\n\n**Пример использования:**\n> React will re-render the component when its props change.\n>\n> React заново отрисует компонент, когда изменятся его свойства."
+      },
+      {
+        "front": "Hydration",
+        "back": "### Гидратация (\"оживление\" HTML на клиенте)\n\n**Пример использования:**\n> SSR improves initial loading speed, followed by client-side hydration.\n>\n> SSR улучшает скорость первоначальной загрузки, за которой следует гидратация на стороне клиента."
+      },
+      {
+        "front": "Middleware",
+        "back": "### Промежуточное ПО / Мидлвар\n\n**Пример использования:**\n> The middleware logs all incoming network requests to the console.\n>\n> Промежуточное ПО записывает все входящие сетевые запросы в консоль."
+      },
+      {
+        "front": "Router",
+        "back": "### Маршрутизатор / Роутер\n\n**Пример использования:**\n> The application router handles navigation between pages smoothly.\n>\n> Маршрутизатор приложения плавно обрабатывает переходы между страницами."
+      },
+      {
+        "front": "Request",
+        "back": "### Запрос\n\n**Пример использования:**\n> The browser sent a GET request to retrieve user profile information.\n>\n> Браузер отправил GET-запрос для получения информации о профиле пользователя."
+      },
+      {
+        "front": "Response",
+        "back": "### Ответ\n\n**Пример использования:**\n> The server returned a 200 OK response with the requested data.\n>\n> Сервер вернул успешный ответ 200 OK с запрошенными данными."
+      },
+      {
+        "front": "Endpoint",
+        "back": "### Точка доступа API / Эндпоинт\n\n**Пример использования:**\n> You need to make a POST call to the registration endpoint.\n>\n> Вам нужно сделать POST-вызов к эндпоинту регистрации."
+      },
+      {
+        "front": "Payload",
+        "back": "### Полезная нагрузка (данные запроса)\n\n**Пример использования:**\n> The request payload contains the user's login details.\n>\n> Полезная нагрузка запроса содержит логин и пароль пользователя."
+      },
+      {
+        "front": "Authentication",
+        "back": "### Аутентификация (подтверждение личности)\n\n**Пример использования:**\n> Firebase Auth handles user authentication securely.\n>\n> Firebase Auth безопасно обрабатывает аутентификацию пользователей."
+      },
+      {
+        "front": "Authorization",
+        "back": "### Авторизация (проверка прав доступа)\n\n**Пример использования:**\n> Authorization rules prevent guests from editing deck templates.\n>\n> Правила авторизации запрещают гостям редактировать шаблоны колод."
+      },
+      {
+        "front": "State",
+        "back": "### Состояние / Стейт\n\n**Пример использования:**\n> You should lift the state up if multiple components need access to it.\n>\n> Вам следует поднять состояние вверх, если нескольким компонентам нужен доступ к нему."
+      },
+      {
+        "front": "Property",
+        "back": "### Свойство\n\n**Пример использования:**\n> We can access the length property of the array.\n>\n> Мы можем получить доступ к свойству length массива."
+      },
+      {
+        "front": "Event Delegation",
+        "back": "### Делегирование событий\n\n**Пример использования:**\n> Event delegation utilizes event bubbling to manage handlers efficiently.\n>\n> Делегирование событий использует всплытие событий для эффективного управления обработчиками."
+      },
+      {
+        "front": "Bubbling",
+        "back": "### Всплытие (событий)\n\n**Пример использования:**\n> Event bubbling triggers handlers on parent elements after the target element.\n>\n> Всплытие событий запускает обработчики на родительских элементах после целевого элемента."
+      },
+      {
+        "front": "Capturing",
+        "back": "### Погружение / Перехват (событий)\n\n**Пример использования:**\n> The capturing phase occurs before the target and bubbling phases.\n>\n> Фаза погружения происходит перед фазами цели и всплытия."
+      },
+      {
+        "front": "Exception",
+        "back": "### Исключение / Ошибка\n\n**Пример использования:**\n> Use try-catch blocks to handle any unexpected runtime exception.\n>\n> Используйте блоки try-catch для обработки любых непредвиденных исключений во время выполнения."
+      },
+      {
+        "front": "Stack Overflow",
+        "back": "### Переполнение стека\n\n**Пример использования:**\n> Infinite recursion eventually results in a stack overflow.\n>\n> Бесконечная рекурсия в конечном итоге приводит к переполнению стека."
+      },
+      {
+        "front": "Parse",
+        "back": "### Анализировать / Разбирать (файл, строку)\n\n**Пример использования:**\n> JSON.parse converts a string into a JavaScript object.\n>\n> JSON.parse преобразует строку в объект JavaScript."
+      },
+      {
+        "front": "Query",
+        "back": "### Запрос (к БД) / Опрашивать\n\n**Пример использования:**\n> We need to query the database to fetch the list of cards.\n>\n> Нам нужно сделать запрос к базе данных, чтобы получить список карточек."
+      }
+    ]
+  }
+]
