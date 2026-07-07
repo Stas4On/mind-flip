@@ -1,32 +1,86 @@
-# React + TypeScript + Vite
+# 🧠 MindFlip
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+**MindFlip** — это современное веб-приложение для эффективного изучения IT-технологий, фреймворков и профессионального английского языка. В его основе лежит научно доказанная методика интервальных повторений (Leitner System), которая помогает оптимизировать процесс запоминания информации и переводить знания в долгосрочную память.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🌟 Ключевые возможности
 
-## React Compiler
+1. **📈 Интервальное повторение (Алгоритм Лейтнера)**
+   - Прогрессивная система изучения карточек, разделенная на 5 уровней сложности.
+   - Автоматический расчет оптимальных интервалов для повторения каждой карточки.
+   - Защита от перегрузки: вы повторяете только те карточки, для которых наступил срок.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+2. **🛠️ Интуитивный редактор колод**
+   - Возможность создавать, переименовывать и удалять собственные колоды.
+   - Добавление и удаление карточек с поддержкой Markdown-разметки и блоков кода.
+   - Интерактивное превью карточки перед добавлением.
 
-## Expanding the Oxlint configuration
+3. **📂 Глобальный каталог и импорт**
+   - Встроенная библиотека готовых экспертных наборов: Advanced JavaScript, Advanced React, Angular Framework и English for Developers (всего более 200 карточек).
+   - Drag-and-Drop импорт колод из локальных файлов форматов **JSON** и **Markdown**.
+   - Доступная инструкция по форматам файлов прямо внутри интерфейса.
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+4. **☁️ Гибридная база данных**
+   - Приложение полноценно работает автономно в браузере (на базе LocalStorage).
+   - Поддерживает автоматическую синхронизацию с облачным хранилищем Firebase Firestore при авторизации.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+5. **🌓 Премиальный дизайн**
+   - Полностью адаптивная верстка под десктопные и мобильные экраны.
+   - Гармоничная темная и светлая темы с плавными анимациями переходов.
+
+---
+
+## 💻 Технологический стек
+
+- **Core:** React 19, TypeScript, Vite.
+- **Стилизация:** Ванильный CSS, CSS-модули, CSS-переменные для темизации.
+- **Иконки:** Lucide React.
+- **Бэкенд:** Firebase Auth (анонимный гостевой вход + Google Auth), Cloud Firestore.
+- **Тестирование:** Vitest (полное покрытие тестов Leitner-алгоритма).
+
+---
+
+## 🚀 Быстрый запуск
+
+### 1. Требования
+Для запуска проекта вам понадобится установленный [Node.js](https://nodejs.org/).
+
+### 2. Установка зависимостей
+Склонируйте репозиторий и установите пакеты:
+```bash
+git clone https://github.com/Stas4On/mind-flip.git
+cd mind-flip
+npm install
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+### 3. Настройка окружения
+Создайте файл `.env.local` в корневом каталоге проекта на основе шаблона:
+```bash
+cp .env.example .env.local
+```
+*(При необходимости укажите ваши ключи конфигурации Firebase для работы облачной синхронизации. Если оставить значения пустыми, приложение автоматически запустится в полностью локальном режиме).*
+
+### 4. Запуск сервера разработки
+Запустите локальный сервер Vite:
+```bash
+npm run dev
+```
+После запуска откройте в браузере адрес [http://localhost:5173](http://localhost:5173).
+
+---
+
+## 🧪 Тестирование и Сборка
+
+### Запуск тестов
+Для прогона тестов алгоритма интервальных повторений выполните:
+```bash
+npx vitest run
+```
+
+### Продакшн-сборка
+Для сборки оптимизированного бандла проекта:
+```bash
+npm run build
+```
+Результаты сборки будут доступны в папке `/dist`.
