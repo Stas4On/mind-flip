@@ -7,9 +7,10 @@ import { ArrowLeft, Brain, BookOpen, Plus, Download, UploadCloud, HelpCircle, X 
 import jsCatalog from '../assets/js-catalog.json';
 import reactCatalog from '../assets/react-catalog.json';
 import angularCatalog from '../assets/angular-catalog.json';
+import englishCatalog from '../assets/english-catalog.json';
 import styles from './Explore.module.css';
 
-const catalogDecks = [...jsCatalog, ...reactCatalog, ...angularCatalog];
+const catalogDecks = [...jsCatalog, ...reactCatalog, ...angularCatalog, ...englishCatalog];
 
 interface CatalogDeck {
   id: string;
