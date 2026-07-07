@@ -2,6 +2,7 @@ import { auth, isFirebaseConfigured } from '../lib/firebase';
 import { 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
+  signInAnonymously,
   signOut as fbSignOut, 
   onAuthStateChanged as fbOnAuthStateChanged
 } from 'firebase/auth';
@@ -51,10 +52,19 @@ export async function signIn(email: string, password: string): Promise<AppUser> 
 }
 
 export async function signInAsGuest(): Promise<AppUser> {
-  const user: AppUser = { uid: 'guest-user', email: 'guest@mindflip.local', isAnonymous: true };
-  localUser = user;
-  localListeners.forEach(listener => listener(user));
-  return user;
+  if (isFirebaseConfigured && auth) {
+    const credential = await signInAnonymously(auth);
+    return {
+      uid: credential.user.uid,
+      email: credential.user.email,
+      isAnonymous: true,
+    };
+  } else {
+    const user: AppUser = { uid: 'guest-user', email: 'guest@mindflip.local', isAnonymous: true };
+    localUser = user;
+    localListeners.forEach(listener => listener(user));
+    return user;
+  }
 }
 
 export async function signOut(): Promise<void> {
