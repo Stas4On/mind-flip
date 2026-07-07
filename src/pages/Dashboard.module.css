@@ -425,3 +425,47 @@
     gap: 8px;
   }
 }
+
+/* Skeleton styles */
+.skeletonCard {
+  pointer-events: none;
+}
+
+.skeletonTitle {
+  height: 24px;
+  width: 60%;
+  background: var(--color-border);
+  border-radius: 4px;
+  animation: pulseSkeleton 1.5s ease-in-out infinite;
+}
+
+.skeletonDesc {
+  height: 16px;
+  width: 90%;
+  background: var(--color-border);
+  border-radius: 4px;
+  margin-top: 10px;
+  animation: pulseSkeleton 1.5s ease-in-out infinite;
+}
+
+.skeletonStats {
+  height: 48px;
+  width: 100%;
+  background: var(--color-border);
+  border-radius: var(--border-radius-sm);
+  margin: 12px 0;
+  animation: pulseSkeleton 1.5s ease-in-out infinite;
+}
+
+.skeletonActions {
+  height: 38px;
+  width: 100%;
+  background: var(--color-border);
+  border-radius: var(--border-radius-sm);
+  animation: pulseSkeleton 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseSkeleton {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.3; }
+}

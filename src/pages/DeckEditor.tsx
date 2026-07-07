@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getDecks, getDeckCards, createCard, deleteCard, deleteDeck, updateCardContent, type Deck, type Card } from '../services/db';
 import { Flashcard } from '../components/cards/Flashcard';
 import { Button } from '../components/ui/Button';
+import { Spinner } from '../components/ui/Spinner';
 import { ThemeToggle } from '../components/ui/ThemeToggle';
 import { ArrowLeft, Plus, Trash2, Eye, Pencil, X } from 'lucide-react';
 import styles from './DeckEditor.module.css';
@@ -111,11 +112,7 @@ export const DeckEditor: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className={styles.loadingScreen}>
-        <h2 className={styles.loadingText}>Загрузка редактора...</h2>
-      </div>
-    );
+    return <Spinner fullScreen message="Загрузка редактора..." />;
   }
 
   if (!deck) {

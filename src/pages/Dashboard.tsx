@@ -6,6 +6,7 @@ import { isFirebaseConfigured } from '../lib/firebase';
 import { Leon } from '../components/mascot/Leon';
 import { Button } from '../components/ui/Button';
 import { ThemeToggle } from '../components/ui/ThemeToggle';
+import { Spinner } from '../components/ui/Spinner';
 import { Plus, Play, Settings, Brain, LogOut, Cloud, Database, Lock, Mail } from 'lucide-react';
 import { isCardDue } from '../lib/leitner';
 import styles from './Dashboard.module.css';
@@ -21,6 +22,7 @@ export const Dashboard: React.FC = () => {
   const [newDeckName, setNewDeckName] = useState('');
   const [newDeckDesc, setNewDeckDesc] = useState('');
   const [loading, setLoading] = useState(true);
+  const [dataLoading, setDataLoading] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
 
   const openCreateForm = () => {
@@ -47,6 +49,7 @@ export const Dashboard: React.FC = () => {
       
       if (currentUser) {
         loadDecksAndStats();
+        setLoading(false);
       } else {
         // If not logged in and Firebase is disabled, auto sign-in as guest
         if (!isFirebaseConfigured) {
@@ -61,7 +64,7 @@ export const Dashboard: React.FC = () => {
   }, []);
 
   const loadDecksAndStats = async () => {
-    setLoading(true);
+    setDataLoading(true);
     try {
       const allDecks = await getDecks();
       setDecks(allDecks);
@@ -79,7 +82,7 @@ export const Dashboard: React.FC = () => {
     } catch (err) {
       console.error('Failed to load decks', err);
     } finally {
-      setLoading(false);
+      setDataLoading(false);
     }
   };
 
@@ -158,11 +161,7 @@ export const Dashboard: React.FC = () => {
 
   // 1. Loading Screen
   if (loading) {
-    return (
-      <div className={styles.loadingScreen}>
-        <h2 className={styles.loadingText}>Загрузка приложения...</h2>
-      </div>
-    );
+    return <Spinner fullScreen message="Запуск приложения..." />;
   }
 
   // 2. Authentication Screen (when Firebase is configured and user is logged out)
@@ -364,7 +363,34 @@ export const Dashboard: React.FC = () => {
       {/* Decks Grid */}
       <main className={styles.mainSection}>
         <h2 className={styles.sectionTitle}>📚 Ваши колоды</h2>
-        {decks.length === 0 ? (
+        {dataLoading && decks.length === 0 ? (
+          <div className={styles.decksGrid}>
+            <div className={`${styles.deckCard} ${styles.skeletonCard}`}>
+              <div className={styles.deckInfo}>
+                <div className={styles.skeletonTitle} />
+                <div className={styles.skeletonDesc} />
+              </div>
+              <div className={styles.skeletonStats} />
+              <div className={styles.skeletonActions} />
+            </div>
+            <div className={`${styles.deckCard} ${styles.skeletonCard}`}>
+              <div className={styles.deckInfo}>
+                <div className={styles.skeletonTitle} />
+                <div className={styles.skeletonDesc} />
+              </div>
+              <div className={styles.skeletonStats} />
+              <div className={styles.skeletonActions} />
+            </div>
+            <div className={`${styles.deckCard} ${styles.skeletonCard}`}>
+              <div className={styles.deckInfo}>
+                <div className={styles.skeletonTitle} />
+                <div className={styles.skeletonDesc} />
+              </div>
+              <div className={styles.skeletonStats} />
+              <div className={styles.skeletonActions} />
+            </div>
+          </div>
+        ) : decks.length === 0 ? (
           <div className={styles.emptyState}>
             <p style={{ fontWeight: 600, color: 'var(--color-text-muted)' }}>У вас пока нет ни одной колоды.</p>
             <Button variant="primary" style={{ marginTop: '16px' }} onClick={openCreateForm}>Создать первую колоду</Button>
