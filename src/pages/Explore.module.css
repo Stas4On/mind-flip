@@ -259,3 +259,17 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.limitsBanner {
+  background-color: var(--color-card-bg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  padding: 16px;
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--color-text-main);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}

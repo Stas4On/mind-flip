@@ -21,6 +21,17 @@ export const Dashboard: React.FC = () => {
   const [newDeckName, setNewDeckName] = useState('');
   const [newDeckDesc, setNewDeckDesc] = useState('');
   const [loading, setLoading] = useState(true);
+  const [createError, setCreateError] = useState<string | null>(null);
+
+  const openCreateForm = () => {
+    setCreateError(null);
+    setShowNewDeckForm(true);
+  };
+
+  const closeCreateForm = () => {
+    setCreateError(null);
+    setShowNewDeckForm(false);
+  };
 
   // Auth form states
   const [isSignUp, setIsSignUp] = useState(false);
@@ -75,6 +86,7 @@ export const Dashboard: React.FC = () => {
   const handleCreateDeck = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newDeckName.trim()) return;
+    setCreateError(null);
 
     try {
       await createDeck(newDeckName, newDeckDesc);
@@ -82,8 +94,9 @@ export const Dashboard: React.FC = () => {
       setNewDeckDesc('');
       setShowNewDeckForm(false);
       await loadDecksAndStats();
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to create deck', err);
+      setCreateError(err.message || 'Не удалось создать колоду');
     }
   };
 
@@ -265,7 +278,7 @@ export const Dashboard: React.FC = () => {
           <Button variant="outline" size="sm" icon={<Brain size={18} />} onClick={() => navigate('/explore')}>
             Каталог
           </Button>
-          <Button variant="outline" size="sm" icon={<Plus size={18} />} onClick={() => setShowNewDeckForm(true)}>
+          <Button variant="outline" size="sm" icon={<Plus size={18} />} onClick={openCreateForm}>
             Новая колода
           </Button>
         </div>
@@ -325,8 +338,23 @@ export const Dashboard: React.FC = () => {
               />
             </div>
 
+            {createError && (
+              <div style={{
+                color: 'var(--color-danger-dark)',
+                backgroundColor: 'var(--color-danger-light)',
+                border: '2px solid var(--color-border)',
+                borderRadius: 'var(--border-radius-sm)',
+                padding: '8px 12px',
+                fontSize: '0.85rem',
+                fontWeight: 600,
+                marginBottom: '12px'
+              }}>
+                ⚠️ {createError}
+              </div>
+            )}
+
             <div className={styles.modalActions}>
-              <Button type="button" variant="outline" onClick={() => setShowNewDeckForm(false)}>Отмена</Button>
+              <Button type="button" variant="outline" onClick={closeCreateForm}>Отмена</Button>
               <Button type="submit" variant="success">Создать</Button>
             </div>
           </form>
@@ -339,7 +367,7 @@ export const Dashboard: React.FC = () => {
         {decks.length === 0 ? (
           <div className={styles.emptyState}>
             <p style={{ fontWeight: 600, color: 'var(--color-text-muted)' }}>У вас пока нет ни одной колоды.</p>
-            <Button variant="primary" style={{ marginTop: '16px' }} onClick={() => setShowNewDeckForm(true)}>Создать первую колоду</Button>
+            <Button variant="primary" style={{ marginTop: '16px' }} onClick={openCreateForm}>Создать первую колоду</Button>
           </div>
         ) : (
           <div className={styles.decksGrid}>

@@ -21,6 +21,7 @@ export const DeckEditor: React.FC = () => {
   
   // Preview states
   const [previewFlipped, setPreviewFlipped] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     loadDeckAndCards();
@@ -46,6 +47,7 @@ export const DeckEditor: React.FC = () => {
   const handleAddCard = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!deckId || !frontText.trim() || !backText.trim()) return;
+    setError(null);
 
     try {
       await createCard(deckId, frontText, backText);
@@ -55,8 +57,9 @@ export const DeckEditor: React.FC = () => {
       setPreviewFlipped(false);
       // Reload cards
       await loadDeckAndCards();
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to add card', err);
+      setError(err.message || 'Не удалось добавить карточку');
     }
   };
 
@@ -169,6 +172,21 @@ export const DeckEditor: React.FC = () => {
                   style={{ fontFamily: 'Fira Code, Courier New, monospace' }}
                 />
               </div>
+
+              {error && (
+                <div style={{
+                  color: 'var(--color-danger-dark)',
+                  backgroundColor: 'var(--color-danger-light)',
+                  border: '2px solid var(--color-border)',
+                  borderRadius: 'var(--border-radius-sm)',
+                  padding: '8px 12px',
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                  marginBottom: '12px'
+                }}>
+                  ⚠️ {error}
+                </div>
+              )}
 
               <Button type="submit" variant="success" icon={<Plus size={18} />} className={styles.buttonSubmit}>
                 Добавить карточку
