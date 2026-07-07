@@ -226,9 +226,10 @@
 
 .markdown-content code {
   font-family: 'Fira Code', 'Courier New', Courier, monospace;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   background-color: var(--color-inline-code-bg);
-  color: var(--color-primary-dark);
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border);
   padding: 2px 6px;
   border-radius: 4px;
 }

@@ -280,6 +280,30 @@ export async function deleteCard(deckId: string, cardId: string): Promise<void> 
   }
 }
 
+export async function updateCardContent(
+  deckId: string,
+  cardId: string,
+  front: string,
+  back: string
+): Promise<void> {
+  const user = getCurrentUser();
+  if (!user) throw new Error('Пользователь не авторизован.');
+
+  if (isFirebaseConfigured && db && user) {
+    const cardRef = doc(db, 'users', user.uid, 'decks', deckId, 'cards', cardId);
+    await updateDoc(cardRef, { front, back });
+  } else {
+    initLocalStorageIfNeeded();
+    const cards = await getDeckCards(deckId);
+    const cardIndex = cards.findIndex(c => c.id === cardId);
+    if (cardIndex === -1) throw new Error('Card not found in Local Storage');
+
+    cards[cardIndex].front = front;
+    cards[cardIndex].back = back;
+    localStorage.setItem(`${CARDS_KEY_PREFIX}${deckId}`, JSON.stringify(cards));
+  }
+}
+
 export async function createDeckWithCards(
   name: string,
   description: string,
