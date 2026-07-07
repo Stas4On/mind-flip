@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createDeck, createCard } from '../services/db';
 import { Button } from '../components/ui/Button';
 import { ThemeToggle } from '../components/ui/ThemeToggle';
-import { ArrowLeft, Brain, BookOpen, Plus, Download, UploadCloud } from 'lucide-react';
+import { ArrowLeft, Brain, BookOpen, Plus, Download, UploadCloud, HelpCircle, X } from 'lucide-react';
 import jsCatalog from '../assets/js-catalog.json';
 import reactCatalog from '../assets/react-catalog.json';
 import angularCatalog from '../assets/angular-catalog.json';
@@ -26,6 +26,10 @@ export const Explore: React.FC = () => {
   const [loadingDeckId, setLoadingDeckId] = useState<string | null>(null);
   const [isImporting, setIsImporting] = useState(false);
   const [importError, setImportError] = useState<string | null>(null);
+  
+  // Format help modal state
+  const [showHelpModal, setShowHelpModal] = useState(false);
+  const [helpTab, setHelpTab] = useState<'markdown' | 'json'>('markdown');
 
   const handleAddTemplate = async (template: CatalogDeck) => {
     setLoadingDeckId(template.id);
@@ -183,9 +187,20 @@ export const Explore: React.FC = () => {
 
       {/* Import Section */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>
-          <UploadCloud size={20} color="var(--color-primary)" /> Импорт своей колоды
-        </h2>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>
+            <UploadCloud size={20} color="var(--color-primary)" /> Импорт своей колоды
+          </h2>
+          <button 
+            type="button" 
+            className={styles.helpButton} 
+            onClick={() => setShowHelpModal(true)}
+            disabled={isImporting || loadingDeckId !== null}
+          >
+            <HelpCircle size={16} /> Справка по форматам
+          </button>
+        </div>
+        
         <div 
           className={styles.importBox} 
           onClick={triggerFileInput}
@@ -238,6 +253,93 @@ export const Explore: React.FC = () => {
           ))}
         </div>
       </section>
+
+      {/* Format Help Modal */}
+      {showHelpModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowHelpModal(false)}>
+          <div className={styles.modalBox} onClick={(e) => e.stopPropagation()}>
+            
+            <div className={styles.modalHeader}>
+              <h3 className={styles.modalTitle}>📖 Инструкция по импорту файлов</h3>
+              <button 
+                onClick={() => setShowHelpModal(false)}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+            
+            <div className={styles.modalContent}>
+              <div className={styles.modalTabs}>
+                <button 
+                  className={`${styles.modalTab} ${helpTab === 'markdown' ? styles.modalTabActive : ''}`}
+                  onClick={() => setHelpTab('markdown')}
+                >
+                  Markdown (.md / .txt)
+                </button>
+                <button 
+                  className={`${styles.modalTab} ${helpTab === 'json' ? styles.modalTabActive : ''}`}
+                  onClick={() => setHelpTab('json')}
+                >
+                  JSON (.json)
+                </button>
+              </div>
+
+              {helpTab === 'markdown' ? (
+                <>
+                  <p className={styles.importDesc} style={{ textAlign: 'left' }}>
+                    Создайте текстовый файл. Первая строчка с <code>#</code> задает имя колоды, строки ниже — описание. 
+                    Разделитель карточек — <code>===</code> на отдельной строке. Разделитель вопроса и ответа — <code>---</code> на отдельной строке.
+                  </p>
+                  <pre className={styles.codeBlock}>
+{`# Основы TypeScript
+Колода для изучения базовых типов TS.
+===
+Что такое Union тип?
+---
+### Union Types
+Объединение типов позволяет переменной принимать один из нескольких типов:
+\`\`\`typescript
+let id: string | number;
+\`\`\`
+===
+Что делает readonly?
+---
+Делает свойства объекта доступными только для чтения.`}
+                  </pre>
+                </>
+              ) : (
+                <>
+                  <p className={styles.importDesc} style={{ textAlign: 'left' }}>
+                    Загрузите файл <code>.json</code> со структурой колоды. Обязательны поля <code>name</code> и массив объектов <code>cards</code> с полями <code>front</code> и <code>back</code>.
+                  </p>
+                  <pre className={styles.codeBlock}>
+{`{
+  "name": "Название колоды",
+  "description": "Описание этой колоды (опционально)",
+  "cards": [
+    {
+      "front": "Текст лицевой стороны (Markdown)",
+      "back": "Текст обратной стороны (Markdown)"
+    },
+    {
+      "front": "Второй вопрос",
+      "back": "Второй ответ"
+    }
+  ]
+}`}
+                  </pre>
+                </>
+              )}
+            </div>
+            
+            <div className={styles.modalFooter}>
+              <Button onClick={() => setShowHelpModal(false)}>Закрыть</Button>
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );
