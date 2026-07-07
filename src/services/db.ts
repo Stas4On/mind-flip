@@ -28,6 +28,17 @@ export interface Deck {
   createdAt: string;
 }
 
+export const LIMITS = {
+  guest: {
+    maxDecks: 3,
+    maxCardsPerDeck: 30,
+  },
+  user: {
+    maxDecks: 10,
+    maxCardsPerDeck: 100,
+  }
+};
+
 const DECKS_KEY = 'mind_flip_decks';
 const CARDS_KEY_PREFIX = 'mind_flip_cards_';
 
@@ -131,6 +142,14 @@ export async function getDecks(): Promise<Deck[]> {
 
 export async function createDeck(name: string, description: string): Promise<Deck> {
   const user = getCurrentUser();
+  if (!user) throw new Error('Пользователь не авторизован.');
+
+  const decks = await getDecks();
+  const limits = user.isAnonymous ? LIMITS.guest : LIMITS.user;
+  if (decks.length >= limits.maxDecks) {
+    throw new Error(`Превышен лимит колод. Максимум для вашего аккаунта: ${limits.maxDecks}.`);
+  }
+
   const newDeckId = `deck-${Date.now()}`;
   const newDeck = {
     name,
@@ -143,7 +162,6 @@ export async function createDeck(name: string, description: string): Promise<Dec
     return { id: newDeckId, ...newDeck };
   } else {
     initLocalStorageIfNeeded();
-    const decks = await getDecks();
     const created = { id: newDeckId, ...newDeck };
     decks.push(created);
     localStorage.setItem(DECKS_KEY, JSON.stringify(decks));
@@ -174,6 +192,14 @@ export async function getDeckCards(deckId: string): Promise<Card[]> {
 
 export async function createCard(deckId: string, front: string, back: string): Promise<Card> {
   const user = getCurrentUser();
+  if (!user) throw new Error('Пользователь не авторизован.');
+
+  const cards = await getDeckCards(deckId);
+  const limits = user.isAnonymous ? LIMITS.guest : LIMITS.user;
+  if (cards.length >= limits.maxCardsPerDeck) {
+    throw new Error(`Превышен лимит карточек в колоде. Максимум для вашего аккаунта: ${limits.maxCardsPerDeck}.`);
+  }
+
   const newCardId = `card-${Date.now()}`;
   const newCard = {
     front,
@@ -187,7 +213,6 @@ export async function createCard(deckId: string, front: string, back: string): P
     return { id: newCardId, ...newCard };
   } else {
     initLocalStorageIfNeeded();
-    const cards = await getDeckCards(deckId);
     const created: Card = { id: newCardId, ...newCard };
     cards.push(created);
     localStorage.setItem(`${CARDS_KEY_PREFIX}${deckId}`, JSON.stringify(cards));
@@ -261,6 +286,18 @@ export async function createDeckWithCards(
   cards: { front: string; back: string }[]
 ): Promise<Deck> {
   const user = getCurrentUser();
+  if (!user) throw new Error('Пользователь не авторизован.');
+
+  const decks = await getDecks();
+  const limits = user.isAnonymous ? LIMITS.guest : LIMITS.user;
+
+  if (decks.length >= limits.maxDecks) {
+    throw new Error(`Превышен лимит колод. Максимум для вашего аккаунта: ${limits.maxDecks}.`);
+  }
+  if (cards.length > limits.maxCardsPerDeck) {
+    throw new Error(`Превышен лимит карточек. Данная колода содержит ${cards.length} карт, максимум для вашего аккаунта: ${limits.maxCardsPerDeck}.`);
+  }
+
   const newDeckId = `deck-${Date.now()}`;
   const newDeck = {
     name,
@@ -293,7 +330,6 @@ export async function createDeckWithCards(
   } else {
     // Local storage fallback
     initLocalStorageIfNeeded();
-    const decks = await getDecks();
     const createdDeck = { id: newDeckId, ...newDeck };
     decks.push(createdDeck);
     localStorage.setItem(DECKS_KEY, JSON.stringify(decks));
