@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createDeck, createCard } from '../services/db';
+import { createDeckWithCards } from '../services/db';
 import { Button } from '../components/ui/Button';
 import { ThemeToggle } from '../components/ui/ThemeToggle';
 import { ArrowLeft, Brain, BookOpen, Plus, Download, UploadCloud, HelpCircle, X } from 'lucide-react';
@@ -35,10 +35,7 @@ export const Explore: React.FC = () => {
     setLoadingDeckId(template.id);
     setImportError(null);
     try {
-      const newDeck = await createDeck(template.name, template.description);
-      for (const card of template.cards) {
-        await createCard(newDeck.id, card.front, card.back);
-      }
+      await createDeckWithCards(template.name, template.description, template.cards);
       navigate('/');
     } catch (err) {
       console.error('Failed to copy template deck', err);
@@ -54,12 +51,8 @@ export const Explore: React.FC = () => {
       throw new Error('Файл JSON должен содержать название "name" и массив карточек "cards".');
     }
 
-    const newDeck = await createDeck(data.name, data.description || '');
-    for (const card of data.cards) {
-      if (card.front && card.back) {
-        await createCard(newDeck.id, card.front, card.back);
-      }
-    }
+    const validCards = data.cards.filter((card: any) => card.front && card.back);
+    await createDeckWithCards(data.name, data.description || '', validCards);
   };
 
   const processMarkdownImport = async (text: string) => {
@@ -105,10 +98,7 @@ export const Explore: React.FC = () => {
       throw new Error('В файле не обнаружено ни одной карточки. Убедитесь, что стороны разделены "---".');
     }
 
-    const newDeck = await createDeck(deckName, deckDesc);
-    for (const card of cardsToCreate) {
-      await createCard(newDeck.id, card.front, card.back);
-    }
+    await createDeckWithCards(deckName, deckDesc, cardsToCreate);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
