@@ -213,3 +213,44 @@
   font-size: 0.85rem;
   font-weight: 500;
 }
+
+@media (max-width: 600px) {
+  .pageContainer {
+    padding: 16px 12px;
+    gap: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .headerLeft {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .headerRight {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .leftColumn,
+  .rightColumn {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .rightColumn {
+    position: relative;
+    top: 0;
+  }
+
+  .cardText {
+    max-width: 160px;
+  }
+}

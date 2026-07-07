@@ -203,3 +203,44 @@
 .flexButton {
   flex: 1;
 }
+
+@media (max-width: 600px) {
+  .studyContainer {
+    padding: 16px 12px;
+    gap: 16px;
+  }
+
+  .header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .headerActions {
+    width: 100%;
+    justify-content: space-between;
+    order: 3;
+  }
+
+  .statusCard,
+  .statusCardFinished {
+    padding: 24px 16px;
+    margin: 20px auto 0 auto;
+  }
+
+  .statusTitle {
+    font-size: 1.5rem;
+  }
+
+  .statusTitleAward {
+    font-size: 1.8rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .flashcardWrapper {
+    min-height: 340px;
+  }
+}
