@@ -1,5 +1,5 @@
 import React from 'react';
-import leonImg from '../../assets/leon.png';
+import leonImg from '../../assets/leon.webp';
 
 export type LeonMood = 'default' | 'happy' | 'sad' | 'doubt';
 
@@ -33,44 +33,16 @@ export const Leon: React.FC<LeonProps> = ({
   return (
     <div 
       className={`leon-mascot-wrapper ${className}`} 
-      style={{ 
-        width: size, 
-        height: size, 
-        display: 'inline-flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'relative',
-        borderRadius: 'var(--border-radius-md)',
-        border: '1px solid var(--color-border)',
-        overflow: 'visible', // позволяет LED светиться за пределами рамки
-        backgroundColor: 'var(--color-card-bg)',
-        boxShadow: 'var(--shadow-sm)'
-      }}
+      style={{ '--leon-size': `${size}px` } as React.CSSProperties}
     >
       <img
         src={leonImg}
         alt="Leon the Mascot"
-        style={{ 
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          borderRadius: 'var(--border-radius-md)',
-          transition: 'all var(--transition-normal)'
-        }}
+        className="leon-image"
       />
       {/* LED-индикатор настроения */}
       <div 
-        className={ledClass}
-        style={{
-          position: 'absolute',
-          top: '-4px',
-          right: '-4px',
-          width: '12px',
-          height: '12px',
-          borderRadius: '50%',
-          border: '2px solid var(--color-card-bg)',
-          zIndex: 5
-        }}
+        className={`leon-led-dot ${ledClass}`}
         title={`Статус: ${mood}`}
       />
     </div>
