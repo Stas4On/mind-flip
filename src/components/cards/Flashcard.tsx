@@ -80,7 +80,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({
               <ReactMarkdown components={markdownComponents}>{front}</ReactMarkdown>
             </div>
           </div>
-          <span className="card-hint">Кликни, чтобы перевернуть 🔄</span>
+          <span className="card-hint">Кликните, чтобы перевернуть</span>
         </div>
 
         {/* Back Side */}
@@ -91,7 +91,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({
               <ReactMarkdown components={markdownComponents}>{back}</ReactMarkdown>
             </div>
           </div>
-          <span className="card-hint">Кликни, чтобы вернуть вопрос 🔄</span>
+          <span className="card-hint">Кликните, чтобы вернуть вопрос</span>
         </div>
 
       </div>

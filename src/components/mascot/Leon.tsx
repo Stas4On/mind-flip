@@ -14,20 +14,18 @@ export const Leon: React.FC<LeonProps> = ({
   size = 180,
   className = '',
 }) => {
-  // Используем CSS-фильтры для небольшой визуальной обратной связи (отзывчивости) в зависимости от настроения
-  let filterStyle = 'drop-shadow(0 4px 12px rgba(0,0,0,0.15))';
-  
+  // Выбираем класс LED-индикатора в зависимости от настроения
+  let ledClass = 'led-blue';
   switch (mood) {
     case 'happy':
-      filterStyle += ' brightness(1.1) saturate(1.2) scale(1.05)';
-      break;
-    case 'sad':
-      filterStyle += ' grayscale(0.5) opacity(0.8) scale(0.95)';
+      ledClass = 'led-green';
       break;
     case 'doubt':
-      filterStyle += ' sepia(0.3) contrast(1.1)';
+      ledClass = 'led-amber';
       break;
-    case 'default':
+    case 'sad':
+      ledClass = 'led-red';
+      break;
     default:
       break;
   }
@@ -41,7 +39,12 @@ export const Leon: React.FC<LeonProps> = ({
         display: 'inline-flex',
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'relative'
+        position: 'relative',
+        borderRadius: 'var(--border-radius-md)',
+        border: '1px solid var(--color-border)',
+        overflow: 'visible', // позволяет LED светиться за пределами рамки
+        backgroundColor: 'var(--color-card-bg)',
+        boxShadow: 'var(--shadow-sm)'
       }}
     >
       <img
@@ -50,12 +53,25 @@ export const Leon: React.FC<LeonProps> = ({
         style={{ 
           width: '100%',
           height: '100%',
-          objectFit: 'cover', // cover лучше скроет фон картинки, если она квадратная
-          borderRadius: '50%', // Скругляем края картинки, чтобы она смотрелась аккуратным аватаром/иконкой
-          border: '2px solid var(--color-border)',
-          transition: 'all var(--transition-normal)',
-          filter: filterStyle
+          objectFit: 'cover',
+          borderRadius: 'var(--border-radius-md)',
+          transition: 'all var(--transition-normal)'
         }}
+      />
+      {/* LED-индикатор настроения */}
+      <div 
+        className={ledClass}
+        style={{
+          position: 'absolute',
+          top: '-4px',
+          right: '-4px',
+          width: '12px',
+          height: '12px',
+          borderRadius: '50%',
+          border: '2px solid var(--color-card-bg)',
+          zIndex: 5
+        }}
+        title={`Статус: ${mood}`}
       />
     </div>
   );

@@ -168,13 +168,14 @@
 
 /* Badge for front/back status */
 .card-badge {
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
   padding: 4px 10px;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: 4px;
   background-color: transparent;
   color: var(--color-text-muted);
   align-self: center;
@@ -199,12 +200,14 @@
   font-weight: 400;
   line-height: 1.6;
   margin: auto 0;
+  text-wrap: balance;
 }
 
 .markdown-content h3 {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-weight: 600;
   margin-bottom: 12px;
+  letter-spacing: -0.01em;
 }
 
 .markdown-content p {
@@ -225,7 +228,7 @@
 }
 
 .markdown-content code {
-  font-family: 'Fira Code', 'Courier New', Courier, monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   background-color: var(--color-inline-code-bg);
   color: var(--color-text-main);
