@@ -6,18 +6,19 @@
 }
 
 .loadingText {
-  font-weight: 800;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
   color: var(--color-text-muted);
 }
 
 .statusCard {
-  max-width: 600px;
+  max-width: 500px;
   margin: 80px auto 0 auto;
-  padding: 30px;
+  padding: 32px;
   background: var(--color-card-bg);
   border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -26,13 +27,13 @@
 }
 
 .statusCardFinished {
-  max-width: 600px;
+  max-width: 500px;
   margin: 60px auto 0 auto;
-  padding: 40px 30px;
+  padding: 40px 32px;
   background: var(--color-card-bg);
   border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,26 +41,31 @@
 }
 
 .statusTitle {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .statusTitleAward {
-  font-size: 2.2rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
 .statusText {
-  font-weight: 600;
+  font-size: 0.95rem;
   color: var(--color-text-muted);
   line-height: 1.5;
 }
 
 .statusTextCenter {
-  font-weight: 600;
+  font-size: 0.95rem;
   color: var(--color-text-muted);
   text-align: center;
+  line-height: 1.5;
 }
 
 .actionsRow {
@@ -84,7 +90,7 @@
   border-radius: var(--border-radius-md);
   padding: 16px;
   text-align: center;
-  background-color: var(--color-success-light);
+  background-color: var(--color-inline-code-bg);
 }
 
 .statCardDanger {
@@ -92,31 +98,41 @@
   border-radius: var(--border-radius-md);
   padding: 16px;
   text-align: center;
-  background-color: var(--color-danger-light);
+  background-color: var(--color-inline-code-bg);
 }
 
 .statLabelSuccess {
-  font-size: 0.85rem;
-  font-weight: 800;
-  color: var(--color-success-dark);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-success);
+  letter-spacing: 0.05em;
 }
 
 .statLabelDanger {
-  font-size: 0.85rem;
-  font-weight: 800;
-  color: var(--color-danger-dark);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-danger);
+  letter-spacing: 0.05em;
 }
 
 .statValueSuccess {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--color-success);
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-top: 4px;
 }
 
 .statValueDanger {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--color-danger);
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-top: 4px;
 }
 
 .fullWidthButton {
@@ -124,9 +140,9 @@
 }
 
 .studyContainer {
-  max-width: 650px;
+  max-width: 620px;
   margin: 0 auto;
-  padding: 30px 20px;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -147,30 +163,35 @@
   gap: 6px;
   font-weight: 600;
   color: var(--color-text-main);
-  font-size: 1rem;
+  font-size: 0.95rem;
+  transition: opacity var(--transition-fast);
+}
+.exitButton:hover {
+  opacity: 0.8;
 }
 
 .headerActions {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
 }
 
 .badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   font-weight: 600;
-  font-size: 1rem;
-  background-color: var(--color-primary-light);
-  padding: 4px 12px;
+  background-color: var(--color-inline-code-bg);
+  padding: 4px 10px;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: 4px;
+  color: var(--color-text-muted);
 }
 
 .progressBarWrapper {
   width: 100%;
-  height: 14px;
-  background-color: var(--color-card-bg);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: 10px;
+  height: 4px;
+  background-color: var(--color-inline-code-bg);
+  border-radius: 2px;
   overflow: hidden;
 }
 
@@ -183,7 +204,7 @@
 .mascotPanel {
   display: flex;
   justify-content: center;
-  height: 60px;
+  height: 70px;
   margin: -10px 0;
 }
 
@@ -192,7 +213,7 @@
 }
 
 .footer {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .footerActions {
@@ -206,33 +227,26 @@
 
 @media (max-width: 600px) {
   .studyContainer {
-    padding: 16px 12px;
-    gap: 16px;
-  }
-
-  .header {
-    flex-wrap: wrap;
-    gap: 12px;
+    padding: 20px 12px;
+    gap: 20px;
   }
 
   .headerActions {
-    width: 100%;
-    justify-content: space-between;
-    order: 3;
+    order: 2;
   }
 
   .statusCard,
   .statusCardFinished {
-    padding: 24px 16px;
-    margin: 20px auto 0 auto;
+    padding: 24px 20px;
+    margin: 40px auto 0 auto;
   }
 
   .statusTitle {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
   .statusTitleAward {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
 
   .statsGrid {
@@ -241,6 +255,6 @@
   }
 
   .flashcardWrapper {
-    min-height: 340px;
+    min-height: 350px;
   }
 }
